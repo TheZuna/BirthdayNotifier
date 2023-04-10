@@ -2,7 +2,10 @@ package hr.TheZuna.projekt.baza;
 
 import hr.TheZuna.projekt.entitet.Prijatelj;
 import hr.TheZuna.projekt.iznimke.DataSetException;
+import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
 
+import javax.xml.xpath.XPathEvaluationResult;
 import java.io.Closeable;
 import java.sql.*;
 import java.time.LocalDate;
@@ -54,7 +57,7 @@ public class BazePodataka implements DataSetovi, Closeable {
     }
     @Override
     public void createPrijatelj(Prijatelj prijatelj) throws DataSetException {
-        String sql = "INSERT INTO prijatelji (ime , prezime, email, datumRodenja) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO osoba (ime , prezime, email, datum_rodjenja) VALUES (?, ?, ?, ?)";
         try{
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, prijatelj.getIme());
@@ -62,11 +65,28 @@ public class BazePodataka implements DataSetovi, Closeable {
             statement.setString(3, prijatelj.getEmail());
             statement.setDate(4, Date.valueOf(prijatelj.getRodendan()));
 
-            var keys = statement.getGeneratedKeys();
-            keys.next();
+            statement.execute();
 
         }catch (SQLException ex){
+            System.out.println(ex.getMessage());
             throw new DataSetException(ex);
         }
+    }
+    @Override
+    public void removePrijatelj(Prijatelj prijatelj) throws DataSetException{
+        String sql = "DELETE FROM osoba WHERE ime = ? AND prezime = ?";
+        try{
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, prijatelj.getIme());
+            statement.setString(2, prijatelj.getPrezime());
+            statement.execute();
+        }catch (SQLException ex){
+            System.out.println(ex.getMessage());
+            throw new DataSetException(ex);
+        }
+    }
+    @Override
+    public void editPrijatelj(Prijatelj prijatelj) throws DataSetException{
+
     }
 }

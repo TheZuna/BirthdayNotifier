@@ -12,7 +12,6 @@ public class Prijatelj {
         this.email = email;
         this.rodendan = rodendan;
     }
-
     public String getIme() {
         return ime;
     }
