@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.TheZuna.projekt.controller.EditOsobaController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.TheZuna.projekt.controller.EditKolegaController">
     <fx:include source="menu.fxml" />
     <center>
         <GridPane BorderPane.alignment="CENTER">
@@ -27,16 +27,16 @@
                 <RowConstraints maxHeight="219.0" minHeight="10.0" prefHeight="212.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label text="Edit Prijatelja" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
+                <Label text="Edit Kolegu" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
                 <Label prefHeight="17.0" prefWidth="60.0" text="Ime:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                 <Label prefHeight="17.0" prefWidth="81.0" text="Prezime:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                <Label prefHeight="17.0" prefWidth="67.0" text="Email:" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                <Label prefHeight="17.0" prefWidth="67.0" text="TEL: (+385)" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                 <Label prefHeight="17.0" prefWidth="117.0" text="Datum rodenja:" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
-                <TextField fx:id="imePrijatelja" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <TextField fx:id="prezimePrijatelja" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <TextField fx:id="emailPrijatelja" prefHeight="25.0" prefWidth="116.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                <DatePicker fx:id="datumRodenjaPrijatelja" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                <Button mnemonicParsing="false" text="Editaj" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                <TextField fx:id="imeKolege" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextField fx:id="prezimeKolege" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TextField fx:id="brTelefonaKolege" prefHeight="25.0" prefWidth="116.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <DatePicker fx:id="datumRodenjaKolege" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <Button mnemonicParsing="false" onAction="#editKolegu" text="Editaj" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
             </children>
             <BorderPane.margin>
                 <Insets top="20.0" />

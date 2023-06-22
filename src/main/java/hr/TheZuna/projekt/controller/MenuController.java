@@ -14,9 +14,19 @@ public class MenuController {
     public void ispisiOsobe() {
         BorderPane root;
         try {
-            URL url = new File("src/main/java/hr/TheZuna/projekt/controller/ispisOsoba.fxml").toURI().toURL();
-            root = (BorderPane) FXMLLoader.load(url);
+            root =  (BorderPane)FXMLLoader.load(getClass().getResource("ispisOsoba.fxml"));
+
              App.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    public void ispisiKolege() {
+        BorderPane root;
+        try {
+            root =  (BorderPane)FXMLLoader.load(getClass().getResource("IspisKolega.fxml"));
+            App.setMainPage(root);
         } catch (IOException e) {
             e.printStackTrace();
         }

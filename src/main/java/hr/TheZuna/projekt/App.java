@@ -9,9 +9,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import hr.TheZuna.projekt.controller.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,12 +32,23 @@ public class App extends Application {
     public static final DateTimeFormatter TIME_FORMAT_FULL = DateTimeFormatter.ofPattern("HH:mm");
     @Override
     public void start(Stage primaryStage) throws IOException {
-        //FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("hr/TheZuna/projekt"));
-        URL url = new File("src/main/java/hr/TheZuna/projekt/controller/menu.fxml").toURI().toURL();
+
+        System.out.println(getClass().getResource(".---"));
+
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("controller/PrikazRodendana.fxml"));
+
+        URL url = new File("src/main/java/hr/TheZuna/projekt/controller/PrikazRodendana.fxml").toURI().toURL();
         //FXMLLoader fxmlLoader = FXMLLoader.load(getClass().getResource("/controller/menu.fxml"));
-        Parent root = FXMLLoader.load(url);
         stage = primaryStage;
-        stage.setScene(new Scene(root, 400, 500));
+
+        //URL iconUrl = getClass().getResource("/birthday.png");
+        //Image icon = new Image(iconUrl.toExternalForm());
+        //stage.getIcons().add(icon);
+
+        stage.getIcons().add(new Image(App.class.getResourceAsStream("birthday.png")));
+
+        Scene scene = new Scene(fxmlLoader.load(), 400, 500);
+        stage.setScene(scene);
         stage.show();
     }
     public static void main(String[] args) {
@@ -58,5 +69,4 @@ public class App extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
 }

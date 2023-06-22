@@ -12,7 +12,10 @@ import java.util.ArrayList;
 
 public class EditOsobaController {
 
-    //Prijatelj prijateljZaEditat = IspisOsobeController.getOdabraniPrijatelj();
+    Prijatelj prijateljZaEditat;
+    public EditOsobaController( Prijatelj prijatelj){
+        this.prijateljZaEditat = prijatelj;
+    }
 
     @FXML
     private TextField imePrijatelja;
@@ -24,7 +27,9 @@ public class EditOsobaController {
     private DatePicker datumRodenjaPrijatelja;
 
     public void initialize(){
-        imePrijatelja.setText("wwooooo");
+        System.out.println(prijateljZaEditat);
+        System.out.println(prijateljZaEditat.getIme());
+        imePrijatelja.setText(prijateljZaEditat.getIme());
     }
 
     public void editPrijatelja() {

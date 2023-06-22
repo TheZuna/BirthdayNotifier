@@ -7,7 +7,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
@@ -15,14 +14,13 @@ import javafx.scene.layout.BorderPane;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 
 
-public class IspisOsobeController {
+public class IspisOsobaController {
 
     private List<Prijatelj> sviPrijatelji;
+
     @FXML
     private TableView<Prijatelj> prijateljTableView;
     @FXML
@@ -70,16 +68,23 @@ public class IspisOsobeController {
         BorderPane root;
         try {
             URL url = new File("src/main/java/hr/TheZuna/projekt/controller/editOsoba.fxml").toURI().toURL();
-            root = (BorderPane) FXMLLoader.load(url);
-            App.setMainPage(root);
+
+            String resourcePath = "src/main/java/hr/TheZuna/projekt/controller/editOsoba.fxml";
+            //URL location = getClass().getResource(resourcePath);
+            System.out.println(url);
+            FXMLLoader loader = new FXMLLoader(url);
+            //root = (BorderPane) FXMLLoader.load(url);
+            EditOsobaController controller = new EditOsobaController(prijateljTableView.getSelectionModel().getSelectedItem());
+            loader.setController(controller);
+            BorderPane borderPane = loader.load();
+            App.setMainPage(borderPane);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
     //public static Prijatelj odabraniPrijatelj = prijateljTableView.getSelectionModel().getSelectedItem();
-    /*public static Prijatelj getOdabraniPrijatelj(){
+    public Prijatelj getOdabraniPrijatelj(){
         Prijatelj odabraniPrijatelj = prijateljTableView.getSelectionModel().getSelectedItem();
         return odabraniPrijatelj;
-    }*/
+    }
 }

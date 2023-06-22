@@ -1,4 +1,4 @@
-module hr.java.projekt {
+module hr.TheZuna.projekt {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
