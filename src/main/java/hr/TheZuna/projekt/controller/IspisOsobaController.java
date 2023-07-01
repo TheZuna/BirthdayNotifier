@@ -46,6 +46,7 @@ public class IspisOsobaController {
     public void prikazUnosaPrijatelja() {
         BorderPane root;
         try {
+
             URL url = new File("src/main/java/hr/TheZuna/projekt/controller/unosOsoba.fxml").toURI().toURL();
             root = (BorderPane) FXMLLoader.load(url);
             App.setMainPage(root);

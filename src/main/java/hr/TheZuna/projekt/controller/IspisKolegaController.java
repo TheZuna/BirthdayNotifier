@@ -51,8 +51,9 @@ public class IspisKolegaController {
     public void prikazUnosaKolege() {
         BorderPane root;
         try {
-            URL url = new File("src/main/java/hr/TheZuna/projekt/controller/unosKolege.fxml").toURI().toURL();
-            root = (BorderPane) FXMLLoader.load(url);
+            root =  (BorderPane)FXMLLoader.load(getClass().getResource("unosKolege.fxml"));
+
+
             App.setMainPage(root);
         } catch (IOException e) {
             e.printStackTrace();

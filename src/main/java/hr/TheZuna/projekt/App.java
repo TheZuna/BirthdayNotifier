@@ -2,7 +2,10 @@ package hr.TheZuna.projekt;
 
 import hr.TheZuna.projekt.baza.BazePodataka;
 import hr.TheZuna.projekt.baza.DataSetovi;
+import hr.TheZuna.projekt.controller.UserAuthenticationController;
 import hr.TheZuna.projekt.iznimke.DataSetException;
+import hr.TheZuna.projekt.users.User;
+import hr.TheZuna.projekt.users.UserAuthentication;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -35,9 +38,12 @@ public class App extends Application {
 
         System.out.println(getClass().getResource(".---"));
 
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("controller/PrikazRodendana.fxml"));
+        //User currentUser = UserAuthenticationController.getCurrentUser();
+        //System.out.println(currentUser.getRole().toString());
 
-        URL url = new File("src/main/java/hr/TheZuna/projekt/controller/PrikazRodendana.fxml").toURI().toURL();
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("controller/loginPage.fxml"));
+
+        //URL url = new File("src/main/java/hr/TheZuna/projekt/controller/PrikazRodendana.fxml").toURI().toURL();
         //FXMLLoader fxmlLoader = FXMLLoader.load(getClass().getResource("/controller/menu.fxml"));
         stage = primaryStage;
 

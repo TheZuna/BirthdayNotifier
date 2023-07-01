@@ -8,17 +8,28 @@ import hr.TheZuna.projekt.entitet.Kolega;
 import hr.TheZuna.projekt.entitet.Osoba;
 import hr.TheZuna.projekt.entitet.Prijatelj;
 import hr.TheZuna.projekt.iznimke.DataSetException;
+import hr.TheZuna.projekt.users.UserAuthentication;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+
+        Map<String, String> map = UserAuthentication.readUsersFromFile();
+        for(String s : map.keySet()){
+            System.out.println(s);
+        }
+        for (String s : map.values()){
+            System.out.println(s);
+        }
 
         //System.out.println(Main.class.getResource("ispisOsoba.fxml").getPath());
         //System.out.println(getClass().getResource("."));

@@ -33,7 +33,7 @@ public class BazePodataka implements DataSetovi, Closeable {
         }catch (SQLException exception){}
     }
 
-    @Override
+
     public List<Kolega> readKolega() throws DataSetException {
         var query = "SELECT * FROM KOLEGA;";
         try(var statement = connection.prepareStatement(query)){

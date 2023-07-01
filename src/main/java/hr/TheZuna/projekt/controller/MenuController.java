@@ -31,4 +31,14 @@ public class MenuController {
             e.printStackTrace();
         }
     }
+    @FXML
+    public void homeScreen(){
+        BorderPane root;
+        try {
+            root =  (BorderPane)FXMLLoader.load(getClass().getResource("PrikazRodendana.fxml"));
+            App.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

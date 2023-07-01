@@ -32,6 +32,6 @@
               </MenuBar>
          </children>
       </HBox>
-      <Button layoutX="372.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="29.0" text="⌂" />
+      <Button layoutX="372.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="29.0" text="⌂" onAction="#homeScreen"/>
     </children>
 </AnchorPane>
