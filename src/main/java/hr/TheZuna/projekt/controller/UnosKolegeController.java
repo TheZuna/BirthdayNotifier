@@ -43,7 +43,7 @@ public class UnosKolegeController {
                 App.getDataSet().createKolega(new Kolega(
                         imeKolege.getText(),
                         prezimeKolege.getText(),
-                        new BigDecimal(brTelefonaKolege.getText()),
+                        brTelefonaKolege.getText(),
                         datumRodenjaKolege.getValue()
                 ));
             }catch (DataSetException ex ){

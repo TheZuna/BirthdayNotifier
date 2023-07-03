@@ -4,9 +4,7 @@ import java.awt.event.*;
 
 import hr.TheZuna.projekt.App;
 import hr.TheZuna.projekt.baza.BazePodataka;
-import hr.TheZuna.projekt.entitet.Kolega;
-import hr.TheZuna.projekt.entitet.Osoba;
-import hr.TheZuna.projekt.entitet.Prijatelj;
+import hr.TheZuna.projekt.entitet.*;
 import hr.TheZuna.projekt.iznimke.DataSetException;
 import hr.TheZuna.projekt.users.UserAuthentication;
 import javafx.scene.control.Alert;
@@ -14,14 +12,55 @@ import javafx.scene.control.ButtonType;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, DataSetException {
+
+        List<Promjena> promjene = new ArrayList<>();
+
+        Promjena promjena = new Promjena("EDIT", new Osoba("Pero", "Peric", LocalDate.of(1997, 9, 5)), LocalDate.now());
+
+        promjene.add(promjena);
+
+        promjene.forEach(a -> System.out.println(a.getPromjena()));
+
+
+
+
+        /*
+
+        Map mapaPromjena = promjene.getPromjene();
+
+        mapaPromjena.forEach((k, v) -> System.out.println(k + " " + v));
+
+
+        ObiteljClan o = new ObiteljClan.Builder()
+                .withIme("Gvico")
+                .withPrezime("Spigelski")
+                .build();
+
+        System.out.println(o.getIme());
+
+        Kolega k = new Kolega("Mirko", "Badalić","3023023202", LocalDate.of(2003, 10, 5));
+
+        var ds = new BazePodataka();
+
+        ObiteljClan obiteljClan = new ObiteljClan("Obitelj1", "ObiteljPrezim1", "Trg 65", LocalDate.of(1998, 10, 4));
+        ds.createObiteljskiClan(obiteljClan);
+
+
+
+
+
+
+
 
         Map<String, String> map = UserAuthentication.readUsersFromFile();
         for(String s : map.keySet()){
@@ -35,7 +74,7 @@ public class Main {
         //System.out.println(getClass().getResource("."));
 
 
-        /*try {
+        try {
             var ds = new BazePodataka();
             List<Prijatelj> osobe = ds.readPrijatelj();
             System.out.println(osobe.size());

@@ -11,6 +11,7 @@ import hr.TheZuna.projekt.users.UserAuthentication;
 import hr.TheZuna.projekt.users.UserRole;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -45,17 +46,22 @@ public class UserAuthenticationController {
             if (password.getText().equals(storedPassword)) {
                 System.out.println("Login successful!");
                 BorderPane root;
-                try {
-                    root =  (BorderPane) FXMLLoader.load(getClass().getResource("PrikazRodendana.fxml"));
-
-                    App.setMainPage(root);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 if(username.getText().equals("admin")){
-                    currentUser = Optional.of(new User(username.getText(), password.getText(), UserRole.ADMIN));
+                    try{
+                        root =  (BorderPane) FXMLLoader.load(getClass().getResource("PrikazRodendana.fxml"));
+                        App.setMainPage(root);
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
+                    App.setCurrentUsesr(new User(username.getText(), password.getText(), UserRole.ADMIN));
                 }else {
-                    currentUser = Optional.of(new User(username.getText(), password.getText(), UserRole.USER));
+                    try{
+                        root =  (BorderPane) FXMLLoader.load(getClass().getResource("PrikazRodendana2.fxml"));
+                        App.setMainPage(root);
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
+                    App.setCurrentUsesr(new User(username.getText(), password.getText(), UserRole.USER));
                 }
 
             } else {

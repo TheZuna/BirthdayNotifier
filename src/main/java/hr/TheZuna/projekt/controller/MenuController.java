@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -26,6 +27,16 @@ public class MenuController {
         BorderPane root;
         try {
             root =  (BorderPane)FXMLLoader.load(getClass().getResource("IspisKolega.fxml"));
+            App.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    public void ispisObiteljskogClana(){
+        BorderPane root;
+        try{
+            root = (BorderPane)FXMLLoader.load(getClass().getResource("ispisObiteljClan.fxml"));
             App.setMainPage(root);
         } catch (IOException e) {
             e.printStackTrace();

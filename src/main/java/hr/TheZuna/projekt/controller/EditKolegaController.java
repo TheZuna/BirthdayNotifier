@@ -6,6 +6,7 @@ import hr.TheZuna.projekt.entitet.Prijatelj;
 import hr.TheZuna.projekt.iznimke.DataSetException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
@@ -19,6 +20,9 @@ public class EditKolegaController {
     }
 
     @FXML
+    public static Button editButton;
+
+    @FXML
     private TextField imeKolege;
     @FXML
     private TextField prezimeKolege;
@@ -27,10 +31,12 @@ public class EditKolegaController {
     @FXML
     private DatePicker datumRodenjaKolege;
 
+
     public void initialize(){
         System.out.println(kolegaZaEditat);
         System.out.println(kolegaZaEditat.getIme());
         imeKolege.setText(kolegaZaEditat.getIme());
+        prezimeKolege.setText(kolegaZaEditat.getPrezime());
     }
 
     public void editKolegu() {
@@ -51,12 +57,14 @@ public class EditKolegaController {
         if (messages.size() == 0){
             System.out.println("NEMA ERRORA");
             try {
-                App.getDataSet().createKolega(new Kolega(
+                App.getDataSet().editKolega(kolegaZaEditat,new Kolega(
                         imeKolege.getText(),
                         prezimeKolege.getText(),
-                        new BigDecimal(brTelefonaKolege.getPrefColumnCount()),
+                        brTelefonaKolege.getText(),
                         datumRodenjaKolege.getValue()
                 ));
+                var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Editana");
+                alert.show();
             }catch (DataSetException ex ){
                 ex.getMessage();
             }
@@ -67,5 +75,9 @@ public class EditKolegaController {
             alert.setTitle("Error");
             alert.show();
         }
+    }
+
+    public static Button getButton() {
+        return editButton;
     }
 }

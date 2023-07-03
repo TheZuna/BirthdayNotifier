@@ -1,13 +1,16 @@
 package hr.TheZuna.projekt.controller;
 
 import hr.TheZuna.projekt.App;
+import hr.TheZuna.projekt.entitet.Osoba;
 import hr.TheZuna.projekt.entitet.Prijatelj;
+import hr.TheZuna.projekt.entitet.Promjena;
 import hr.TheZuna.projekt.iznimke.DataSetException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 
@@ -39,12 +42,14 @@ public class UnosOsobeContoller {
         if (messages.size() == 0){
             System.out.println("NEMA ERRORA");
             try {
-                App.getDataSet().createPrijatelj(new Prijatelj(
+                Prijatelj prijatelj = new Prijatelj(
                         imePrijatelja.getText(),
                         prezimePrijatelja.getText(),
                         emailPrijatelja.getText(),
                         datumRodenjaPrijatelja.getValue()
-                ));
+                );
+                App.getDataSet().createPrijatelj(prijatelj);
+                App.addToPromjene(new Promjena("UNOS", (Osoba) prijatelj, LocalDate.now()));
             }catch (DataSetException ex ){
                 ex.getMessage();
             }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.TheZuna.projekt.controller.IspisObiteljClanController">
+    <fx:include source="menu.fxml" />
+    <bottom>
+        <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button mnemonicParsing="false" onAction="#prikazUnosaObiteljskogClana" text="Unos" />
+                <Button mnemonicParsing="false" text="Edit">
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                </Button>
+                <Button mnemonicParsing="false" onAction="#removeObiteljskogClana" text="Remove">
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                </Button>
+            </children>
+        </HBox>
+    </bottom>
+   <left>
+        <TableView fx:id="obiteljClanTableView" prefHeight="424.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="imeObiteljClanColumn" prefWidth="75.0" text="Ime" />
+                <TableColumn fx:id="prezimeObiteljClanColumn" prefWidth="88.0" text="Prezime" />
+                <TableColumn fx:id="datumRodenjaObiteljClanColumn" prefWidth="125.0" text="Datum Rodenja " />
+            <TableColumn fx:id="adresaObiteljClanColumn" prefWidth="126.0" text="Adresa" />
+            </columns>
+            <BorderPane.margin>
+                <Insets top="23.0" />
+            </BorderPane.margin>
+        </TableView>
+   </left>
+</BorderPane>

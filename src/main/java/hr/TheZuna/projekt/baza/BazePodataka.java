@@ -1,6 +1,7 @@
 package hr.TheZuna.projekt.baza;
 
 import hr.TheZuna.projekt.entitet.Kolega;
+import hr.TheZuna.projekt.entitet.ObiteljClan;
 import hr.TheZuna.projekt.entitet.Prijatelj;
 import hr.TheZuna.projekt.iznimke.DataSetException;
 import javafx.fxml.FXML;
@@ -45,7 +46,7 @@ public class BazePodataka implements DataSetovi, Closeable {
                 while (results.next()){
                     String ime = results.getString("ime");
                     String prezime = results.getString("prezime");
-                    BigDecimal brTelefona = results.getBigDecimal("brTelefona");
+                    String brTelefona = results.getString("brTelefona");
                     LocalDate rodendan = results.getDate("datum_rodjenja").toLocalDate();
                     Kolega noviKolega = new Kolega(ime, prezime, brTelefona, rodendan);
                     kolega.add(noviKolega);
@@ -83,6 +84,39 @@ public class BazePodataka implements DataSetovi, Closeable {
         }
     }
     @Override
+    public List<ObiteljClan> readObiteljskiClan() throws DataSetException {
+        var query = "SELECT * FROM OBITELJSKI_CLAN;";
+        try(var statement = connection.prepareStatement(query)){
+            statement.execute();
+
+            var obiteljskiClanovi = new ArrayList<ObiteljClan>();
+
+            try(var results = statement.getResultSet()){
+                while (results.next()){
+                    String ime = results.getString("ime");
+                    String prezime = results.getString("prezime");
+                    LocalDate rodendan = results.getDate("datum_rodjenja").toLocalDate();
+                    String adresa = results.getString("datum_rodjenja");
+
+                    ObiteljClan noviObiteljskiClan = new ObiteljClan.Builder()
+                            .withIme(ime)
+                            .withPrezime(prezime)
+                            .withRodendan(rodendan)
+                            .withAdresa(adresa)
+                            .build();
+
+                    obiteljskiClanovi.add(noviObiteljskiClan);
+                }
+            }
+            return obiteljskiClanovi;
+
+        }catch (SQLException e){
+            throw new DataSetException(e);
+        }
+    }
+
+
+    @Override
     public void createPrijatelj(Prijatelj prijatelj) throws DataSetException {
         String sql = "INSERT INTO osoba (ime , prezime, email, datum_rodjenja) VALUES (?, ?, ?, ?)";
         try{
@@ -116,6 +150,25 @@ public class BazePodataka implements DataSetovi, Closeable {
             throw new DataSetException(ex);
         }
     }
+
+    @Override
+    public void createObiteljskiClan(ObiteljClan obiteljClan) throws DataSetException {
+        String sql = "INSERT INTO OBITELJSKI_CLAN (ime , prezime, datum_rodjenja, adresa) VALUES (?, ?, ?, ?)";
+        try{
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, obiteljClan.getIme());
+            statement.setString(2, obiteljClan.getPrezime());
+            statement.setDate(3, Date.valueOf(obiteljClan.getRodendan()));
+            statement.setString(4, obiteljClan.getAdresa());
+
+            statement.execute();
+
+        }catch (SQLException ex){
+            System.out.println(ex.getMessage());
+            throw new DataSetException(ex);
+        }
+    }
+
     @Override
     public void removePrijatelj(Prijatelj prijatelj) throws DataSetException{
         String sql = "DELETE FROM osoba WHERE ime = ? AND prezime = ?";
@@ -131,24 +184,53 @@ public class BazePodataka implements DataSetovi, Closeable {
     }
     @Override
     public void removeKolega(Kolega kolega) throws DataSetException{
-        {
-            String sql = "DELETE FROM kolega WHERE ime = ? AND prezime = ?";
-            try{
-                PreparedStatement statement = connection.prepareStatement(sql);
-                statement.setString(1, kolega.getIme());
-                statement.setString(2, kolega.getPrezime());
-                statement.execute();
-            }catch (SQLException ex){
-                System.out.println(ex.getMessage());
-                throw new DataSetException(ex);
-            }
+        String sql = "DELETE FROM kolega WHERE ime = ? AND prezime = ?";
+        try{
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, kolega.getIme());
+            statement.setString(2, kolega.getPrezime());
+            statement.execute();
+        }catch (SQLException ex){
+            System.out.println(ex.getMessage());
+            throw new DataSetException(ex);
         }
     }
+    @Override
+    public void removeObiteljskiClan(ObiteljClan obiteljClan) throws DataSetException{
+        String sql = "DELETE FROM OBITELJSKI_CLAN WHERE ime = ? AND prezime = ?";
+        try{
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, obiteljClan.getIme());
+            statement.setString(2, obiteljClan.getPrezime());
+            statement.execute();
+        }catch (SQLException ex){
+            System.out.println(ex.getMessage());
+            throw new DataSetException(ex);
+        }
+    }
+
     @Override
     public void editPrijatelj(Prijatelj prijatelj) throws DataSetException{
 
     }
 
     @Override
-    public void editKolega(Kolega kolega) throws DataSetException{}
+    public void editKolega(Kolega stariKolega, Kolega noviKolega ) throws DataSetException{
+        String sql = "UPDATE KOLEGA SET IME = ?, PREZIME = ?, BRTELEFONA = ?, DATUM_RODJENJA = ? WHERE IME = ? AND PREZIME = ?";
+
+        try{
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, noviKolega.getIme());
+            statement.setString(2, noviKolega.getPrezime());
+            statement.setString(3, noviKolega.getBrTelefona());
+            statement.setDate(4, Date.valueOf(noviKolega.getRodendan()));
+            statement.setString(5, stariKolega.getIme());
+            statement.setString(6, stariKolega.getPrezime());
+            statement.executeUpdate();
+
+        }catch (SQLException ex){
+            System.out.println(ex.getMessage());
+            throw new DataSetException(ex);
+        }
+    }
 }

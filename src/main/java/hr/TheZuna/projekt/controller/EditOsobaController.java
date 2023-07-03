@@ -50,7 +50,7 @@ public class EditOsobaController {
         if (messages.size() == 0){
             System.out.println("NEMA ERRORA");
             try {
-                App.getDataSet().createPrijatelj(new Prijatelj(
+                App.getDataSet().editPrijatelj(new Prijatelj(
                         imePrijatelja.getText(),
                         prezimePrijatelja.getText(),
                         emailPrijatelja.getText(),

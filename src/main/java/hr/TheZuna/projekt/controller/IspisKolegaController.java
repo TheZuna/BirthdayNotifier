@@ -6,6 +6,8 @@ import hr.TheZuna.projekt.entitet.Prijatelj;
 import hr.TheZuna.projekt.iznimke.DataSetException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
@@ -73,19 +75,17 @@ public class IspisKolegaController {
 
     @FXML
     public void prikazEditaKolege() {
-        BorderPane root;
         try {
-            URL url = new File("src/main/java/hr/TheZuna/projekt/controller/editKolega.fxml").toURI().toURL();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("editKolega.fxml"));
 
-            String resourcePath = "src/main/java/hr/TheZuna/projekt/controller/editKolega.fxml";
-            //URL location = getClass().getResource(resourcePath);
-            System.out.println(url);
-            FXMLLoader loader = new FXMLLoader(url);
-            //root = (BorderPane) FXMLLoader.load(url);
+
             EditKolegaController controller = new EditKolegaController(kolegeTableView.getSelectionModel().getSelectedItem());
             loader.setController(controller);
-            BorderPane borderPane = loader.load();
-            App.setMainPage(borderPane);
+
+            BorderPane root = loader.load();
+            App.setMainPage(root);
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }

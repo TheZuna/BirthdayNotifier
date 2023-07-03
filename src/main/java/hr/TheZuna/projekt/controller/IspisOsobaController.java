@@ -2,6 +2,7 @@ package hr.TheZuna.projekt.controller;
 
 import hr.TheZuna.projekt.App;
 import hr.TheZuna.projekt.entitet.Prijatelj;
+import hr.TheZuna.projekt.entitet.Promjena;
 import hr.TheZuna.projekt.iznimke.DataSetException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -46,9 +47,7 @@ public class IspisOsobaController {
     public void prikazUnosaPrijatelja() {
         BorderPane root;
         try {
-
-            URL url = new File("src/main/java/hr/TheZuna/projekt/controller/unosOsoba.fxml").toURI().toURL();
-            root = (BorderPane) FXMLLoader.load(url);
+            root = (BorderPane)FXMLLoader.load(getClass().getResource("unosOsoba.fxml"));
             App.setMainPage(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -59,6 +58,8 @@ public class IspisOsobaController {
         try{
             Prijatelj selectedPrijatelj = prijateljTableView.getSelectionModel().getSelectedItem();
             App.getDataSet().removePrijatelj(selectedPrijatelj);
+
+
         }catch (DataSetException ex){
             System.out.println(ex.getMessage());
         }
@@ -66,19 +67,15 @@ public class IspisOsobaController {
     }
     @FXML
     public void prikazEditaPrijatelja(){
-        BorderPane root;
         try {
-            URL url = new File("src/main/java/hr/TheZuna/projekt/controller/editOsoba.fxml").toURI().toURL();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("editOsoba.fxml"));
 
-            String resourcePath = "src/main/java/hr/TheZuna/projekt/controller/editOsoba.fxml";
-            //URL location = getClass().getResource(resourcePath);
-            System.out.println(url);
-            FXMLLoader loader = new FXMLLoader(url);
-            //root = (BorderPane) FXMLLoader.load(url);
+
             EditOsobaController controller = new EditOsobaController(prijateljTableView.getSelectionModel().getSelectedItem());
             loader.setController(controller);
-            BorderPane borderPane = loader.load();
-            App.setMainPage(borderPane);
+
+            BorderPane root = loader.load();
+            App.setMainPage(root);
         } catch (IOException e) {
             e.printStackTrace();
         }
