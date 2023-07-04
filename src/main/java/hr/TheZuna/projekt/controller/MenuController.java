@@ -52,4 +52,14 @@ public class MenuController {
             e.printStackTrace();
         }
     }
+    @FXML
+    public void showAllUsersScreen(){
+        BorderPane root;
+        try {
+            root =  (BorderPane)FXMLLoader.load(getClass().getResource("listAllUsers.fxml"));
+            App.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

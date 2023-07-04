@@ -13,15 +13,34 @@ import javafx.scene.control.ButtonType;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.security.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException, DataSetException {
+    public static void main(String[] args) throws IOException, DataSetException, NoSuchAlgorithmException {
+
+        String plaintext = "password";
+        MessageDigest m = MessageDigest.getInstance("MD5");
+        m.reset();
+        m.update(plaintext.getBytes());
+        byte[] digest = m.digest();
+        BigInteger bigInt = new BigInteger(1,digest);
+        String hashtext = bigInt.toString(16);
+// Now we need to zero pad it if you actually want the full 32 chars.
+        while(hashtext.length() < 32 ){
+            hashtext = "0"+hashtext;
+        }
+        System.out.println(hashtext);
+
+        /*
 
         List<Promjena> promjene = new ArrayList<>();
 
@@ -34,7 +53,7 @@ public class Main {
 
 
 
-        /*
+
 
         Map mapaPromjena = promjene.getPromjene();
 

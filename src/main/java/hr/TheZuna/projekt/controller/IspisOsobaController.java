@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
@@ -58,7 +59,16 @@ public class IspisOsobaController {
         try{
             Prijatelj selectedPrijatelj = prijateljTableView.getSelectionModel().getSelectedItem();
             App.getDataSet().removePrijatelj(selectedPrijatelj);
+            var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Izbrisana");
+            alert.show();
 
+            BorderPane root;
+            try {
+                root =  (BorderPane) FXMLLoader.load(getClass().getResource("ispisOsoba.fxml"));
+                App.setMainPage(root);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         }catch (DataSetException ex){
             System.out.println(ex.getMessage());
@@ -78,6 +88,7 @@ public class IspisOsobaController {
             App.setMainPage(root);
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Tu sam puko Edit prijatelja");
         }
     }
     //public static Prijatelj odabraniPrijatelj = prijateljTableView.getSelectionModel().getSelectedItem();

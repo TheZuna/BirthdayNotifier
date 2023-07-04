@@ -210,8 +210,23 @@ public class BazePodataka implements DataSetovi, Closeable {
     }
 
     @Override
-    public void editPrijatelj(Prijatelj prijatelj) throws DataSetException{
+    public void editPrijatelj(Prijatelj startiPrijatelj, Prijatelj noviPrijatelj) throws DataSetException{
+        String sql = "UPDATE OSOBA  SET IME = ?, PREZIME = ?, EMAIL = ?, DATUM_RODJENJA = ? WHERE IME = ? AND PREZIME = ?";
 
+        try{
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, noviPrijatelj.getIme());
+            statement.setString(2, noviPrijatelj.getPrezime());
+            statement.setString(3, noviPrijatelj.getEmail());
+            statement.setDate(4, Date.valueOf(noviPrijatelj.getRodendan()));
+            statement.setString(5, startiPrijatelj.getIme());
+            statement.setString(6, startiPrijatelj.getPrezime());
+            statement.executeUpdate();
+
+        }catch (SQLException ex){
+            System.out.println(ex.getMessage());
+            throw new DataSetException(ex);
+        }
     }
 
     @Override
@@ -226,6 +241,25 @@ public class BazePodataka implements DataSetovi, Closeable {
             statement.setDate(4, Date.valueOf(noviKolega.getRodendan()));
             statement.setString(5, stariKolega.getIme());
             statement.setString(6, stariKolega.getPrezime());
+            statement.executeUpdate();
+
+        }catch (SQLException ex){
+            System.out.println(ex.getMessage());
+            throw new DataSetException(ex);
+        }
+    }
+    @Override
+    public void editObiteljClan(ObiteljClan stariClan, ObiteljClan noviClan) throws DataSetException{
+        String sql = "UPDATE OBITELJSKI_CLAN SET IME = ?, PREZIME = ?, ADRESA = ?, DATUM_RODJENJA = ? WHERE IME = ? AND PREZIME = ?";
+
+        try{
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, noviClan.getIme());
+            statement.setString(2, noviClan.getPrezime());
+            statement.setString(3, noviClan.getAdresa());
+            statement.setDate(4, Date.valueOf(noviClan.getRodendan()));
+            statement.setString(5, stariClan.getIme());
+            statement.setString(6, stariClan.getPrezime());
             statement.executeUpdate();
 
         }catch (SQLException ex){

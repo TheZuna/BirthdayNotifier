@@ -30,12 +30,12 @@
                 <Label text="Edit Kolegu" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
                 <Label prefHeight="17.0" prefWidth="60.0" text="Ime:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                 <Label prefHeight="17.0" prefWidth="81.0" text="Prezime:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                <Label prefHeight="17.0" prefWidth="67.0" text="TEL: (+385)" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                <Label prefHeight="17.0" prefWidth="67.0" text="Adresa: " GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                 <Label prefHeight="17.0" prefWidth="117.0" text="Datum rodenja:" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
-                <TextField fx:id="imeKolege" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <TextField fx:id="prezimeKolege" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <TextField fx:id="brTelefonaKolege" prefHeight="25.0" prefWidth="116.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                <DatePicker fx:id="datumRodenjaKolege" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <TextField fx:id="imeObiteljClan" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextField fx:id="prezimeObiteljClan" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TextField fx:id="adresaObiteljClan" prefHeight="25.0" prefWidth="116.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <DatePicker fx:id="datumRodenjaPrijatelja" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                 <Button fx:id="editButton" mnemonicParsing="false" text="Editaj" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
             </children>
             <BorderPane.margin>

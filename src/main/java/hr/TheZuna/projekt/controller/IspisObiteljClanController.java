@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
@@ -62,31 +63,36 @@ public class IspisObiteljClanController {
         try {
             ObiteljClan selectedObiteljskiClan = obiteljClanTableView.getSelectionModel().getSelectedItem();
             App.getDataSet().removeObiteljskiClan(selectedObiteljskiClan);
-
+            var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Izbrisana");
+            alert.show();
+            BorderPane root;
+            try {
+                root =  (BorderPane) FXMLLoader.load(getClass().getResource("ispisObiteljClan.fxml"));
+                App.setMainPage(root);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         } catch (DataSetException ex) {
             System.out.println(ex.getMessage());
         }
 
     }
-    /*
+
     @FXML
     public void prikazEditaObiteljskogClana() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("editKolega.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("editObiteljClan.fxml"));
 
 
-            EditKolegaController controller = new EditKolegaController(kolegeTableView.getSelectionModel().getSelectedItem());
+            EditObiteljClanController controller = new EditObiteljClanController(obiteljClanTableView.getSelectionModel().getSelectedItem());
             loader.setController(controller);
 
             BorderPane root = loader.load();
             App.setMainPage(root);
 
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-     */
 }

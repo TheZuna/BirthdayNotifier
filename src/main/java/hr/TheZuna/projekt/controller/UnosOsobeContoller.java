@@ -6,10 +6,13 @@ import hr.TheZuna.projekt.entitet.Prijatelj;
 import hr.TheZuna.projekt.entitet.Promjena;
 import hr.TheZuna.projekt.iznimke.DataSetException;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -49,7 +52,18 @@ public class UnosOsobeContoller {
                         datumRodenjaPrijatelja.getValue()
                 );
                 App.getDataSet().createPrijatelj(prijatelj);
+                var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Unešena");
+                alert.show();
+                BorderPane root;
+                try {
+                    root =  (BorderPane) FXMLLoader.load(getClass().getResource("ispisOsoba.fxml"));
+                    App.setMainPage(root);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 App.addToPromjene(new Promjena("UNOS", (Osoba) prijatelj, LocalDate.now()));
+                System.out.println(App.getAllPromjene());
             }catch (DataSetException ex ){
                 ex.getMessage();
             }

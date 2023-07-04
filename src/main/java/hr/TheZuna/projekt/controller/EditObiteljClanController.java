@@ -1,7 +1,7 @@
 package hr.TheZuna.projekt.controller;
 
 import hr.TheZuna.projekt.App;
-import hr.TheZuna.projekt.entitet.Kolega;
+import hr.TheZuna.projekt.entitet.ObiteljClan;
 import hr.TheZuna.projekt.entitet.Prijatelj;
 import hr.TheZuna.projekt.iznimke.DataSetException;
 import javafx.event.ActionEvent;
@@ -15,70 +15,67 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public class EditKolegaController {
-    Kolega kolegaZaEditat;
-    public EditKolegaController(Kolega kolega){
-        this.kolegaZaEditat = kolega;
+public class EditObiteljClanController {
+
+    ObiteljClan clanZaEditat;
+    public EditObiteljClanController( ObiteljClan obiteljClan){
+        this.clanZaEditat = obiteljClan;
     }
 
     @FXML
+    private TextField imeObiteljClan;
+    @FXML
+    private TextField prezimeObiteljClan;
+    @FXML
+    private TextField adresaObiteljClan;
+    @FXML
+    private DatePicker datumRodenjaPrijatelja;
+    @FXML
     private Button editButton;
 
-    @FXML
-    private TextField imeKolege;
-    @FXML
-    private TextField prezimeKolege;
-    @FXML
-    private TextField brTelefonaKolege;
-    @FXML
-    private DatePicker datumRodenjaKolege;
-
-
     public void initialize(){
-        System.out.println(kolegaZaEditat);
-        System.out.println(kolegaZaEditat.getIme());
-        imeKolege.setText(kolegaZaEditat.getIme());
-        prezimeKolege.setText(kolegaZaEditat.getPrezime());
+        System.out.println(clanZaEditat);
+        System.out.println(clanZaEditat.getIme());
+        imeObiteljClan.setText(clanZaEditat.getIme());
         editButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                editKolegu();
+                editObiteljskiClan();
             }
         });
     }
 
-    public void editKolegu() {
+    public void editObiteljskiClan() {
         ArrayList<String> messages = new ArrayList<>();
 
-        if(imeKolege.getText().isBlank()){
-            messages.add("Polje Ime Kolege je prazno! ");
+        if(imeObiteljClan.getText().isBlank()){
+            messages.add("Polje Ime Člana obitelji je prazno! ");
         }
-        if(prezimeKolege.getText().isBlank()){
-            messages.add("Polje Prezime Kolege je prazno! ");
+        if(prezimeObiteljClan.getText().isBlank()){
+            messages.add("Polje Prezime Člana obitelji je prazno! ");
         }
-        if(brTelefonaKolege.getText().isBlank()){
-            messages.add("Polje Email Kolege je prazno! ");
+        if(adresaObiteljClan.getText().isBlank()){
+            messages.add("Polje Adresa Člana obitelji je prazno! ");
         }
-        if(datumRodenjaKolege.getValue() == null){
-            messages.add("Polje Rodendan Kolege je prazno! ");
+        if(datumRodenjaPrijatelja.getValue() == null){
+            messages.add("Polje Rodendan Člana obitelji je prazno! ");
         }
         if (messages.size() == 0){
             System.out.println("NEMA ERRORA");
             try {
-                App.getDataSet().editKolega(kolegaZaEditat,new Kolega(
-                        imeKolege.getText(),
-                        prezimeKolege.getText(),
-                        brTelefonaKolege.getText(),
-                        datumRodenjaKolege.getValue()
+                App.getDataSet().editObiteljClan(clanZaEditat, new ObiteljClan(
+                        imeObiteljClan.getText(),
+                        prezimeObiteljClan.getText(),
+                        adresaObiteljClan.getText(),
+                        datumRodenjaPrijatelja.getValue()
                 ));
                 var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Editana");
                 alert.show();
                 BorderPane root;
                 try {
-                    root =  (BorderPane) FXMLLoader.load(getClass().getResource("IspisKolega.fxml"));
+                    root =  (BorderPane) FXMLLoader.load(getClass().getResource("ispisObiteljClan.fxml"));
                     App.setMainPage(root);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -94,10 +91,4 @@ public class EditKolegaController {
             alert.show();
         }
     }
-
-    /*public static Button getButton() {
-        return editButton;
-    }
-
-     */
 }

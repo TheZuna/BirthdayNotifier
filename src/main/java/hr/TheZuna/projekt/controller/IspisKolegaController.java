@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
@@ -54,8 +55,6 @@ public class IspisKolegaController {
         BorderPane root;
         try {
             root =  (BorderPane)FXMLLoader.load(getClass().getResource("unosKolege.fxml"));
-
-
             App.setMainPage(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,6 +66,15 @@ public class IspisKolegaController {
         try {
             Kolega selectedKolega = kolegeTableView.getSelectionModel().getSelectedItem();
             App.getDataSet().removeKolega(selectedKolega);
+            var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Izbrisana");
+            alert.show();
+            BorderPane root;
+            try {
+                root =  (BorderPane)FXMLLoader.load(getClass().getResource("IspisKolega.fxml"));
+                App.setMainPage(root);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } catch (DataSetException ex) {
             System.out.println(ex.getMessage());
         }

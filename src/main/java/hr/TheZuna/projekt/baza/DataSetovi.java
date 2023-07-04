@@ -26,6 +26,7 @@ public interface DataSetovi {
     void removeObiteljskiClan(ObiteljClan obiteljClan) throws DataSetException;
 
 
-    void editPrijatelj(Prijatelj prijatelj) throws DataSetException;
+    void editPrijatelj(Prijatelj startiPrijatelj, Prijatelj noviPrijatelj) throws DataSetException;
     void editKolega(Kolega stariKolega, Kolega noviKolega) throws DataSetException;
+    void editObiteljClan(ObiteljClan stariClan, ObiteljClan noviClan) throws DataSetException;
 }

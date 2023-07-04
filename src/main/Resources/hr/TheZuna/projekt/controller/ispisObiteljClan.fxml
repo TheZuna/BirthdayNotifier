@@ -13,7 +13,7 @@
         <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
                 <Button mnemonicParsing="false" onAction="#prikazUnosaObiteljskogClana" text="Unos" />
-                <Button mnemonicParsing="false" text="Edit">
+                <Button mnemonicParsing="false" onAction="#prikazEditaObiteljskogClana" text="Edit">
                     <HBox.margin>
                         <Insets />
                     </HBox.margin>

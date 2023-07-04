@@ -5,10 +5,13 @@ import hr.TheZuna.projekt.entitet.Kolega;
 import hr.TheZuna.projekt.entitet.Prijatelj;
 import hr.TheZuna.projekt.iznimke.DataSetException;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -46,6 +49,15 @@ public class UnosKolegeController {
                         brTelefonaKolege.getText(),
                         datumRodenjaKolege.getValue()
                 ));
+                var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Unešena");
+                alert.show();
+                BorderPane root;
+                try {
+                    root =  (BorderPane) FXMLLoader.load(getClass().getResource("IspisKolega.fxml"));
+                    App.setMainPage(root);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }catch (DataSetException ex ){
                 ex.getMessage();
             }

@@ -1,7 +1,7 @@
 package hr.TheZuna.projekt.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 import java.util.Optional;
 
@@ -9,24 +9,23 @@ import hr.TheZuna.projekt.App;
 import hr.TheZuna.projekt.users.User;
 import hr.TheZuna.projekt.users.UserAuthentication;
 import hr.TheZuna.projekt.users.UserRole;
+import hr.TheZuna.projekt.users.Md5Hashing;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
-import javax.sound.midi.Soundbank;
-import javax.swing.text.html.Option;
-
-public class UserAuthenticationController {
+public final class UserAuthenticationController implements Md5Hashing {
 
     public static Optional<User> currentUser = Optional.empty();
 
     @FXML
     private TextField username;
     @FXML
-    private TextField password;
+    private PasswordField password;
+
     /*
     @FXML
     public void initialize (){
@@ -38,12 +37,12 @@ public class UserAuthenticationController {
     }
 
      */
-    public void login() throws IOException {
+    public void login() throws IOException, NoSuchAlgorithmException {
         Map<String, String> users = UserAuthentication.readUsersFromFile();
         Alert a = new Alert(Alert.AlertType.NONE);
         if (users.containsKey(username.getText())) {
             String storedPassword = users.get(username.getText());
-            if (password.getText().equals(storedPassword)) {
+            if ((getHash(password.getText()).equals(storedPassword))){
                 System.out.println("Login successful!");
                 BorderPane root;
                 if(username.getText().equals("admin")){
@@ -53,7 +52,7 @@ public class UserAuthenticationController {
                     }catch (IOException e){
                         e.printStackTrace();
                     }
-                    App.setCurrentUsesr(new User(username.getText(), password.getText(), UserRole.ADMIN));
+                    App.setCurrentUser(new User(username.getText(), password.getText(), UserRole.ADMIN));
                 }else {
                     try{
                         root =  (BorderPane) FXMLLoader.load(getClass().getResource("PrikazRodendana2.fxml"));
@@ -61,7 +60,7 @@ public class UserAuthenticationController {
                     }catch (IOException e){
                         e.printStackTrace();
                     }
-                    App.setCurrentUsesr(new User(username.getText(), password.getText(), UserRole.USER));
+                    App.setCurrentUser(new User(username.getText(), password.getText(), UserRole.USER));
                 }
 
             } else {

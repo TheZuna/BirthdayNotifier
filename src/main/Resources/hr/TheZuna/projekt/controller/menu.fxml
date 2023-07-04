@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.TheZuna.projekt.controller.MenuController">
     <children>
       <HBox prefHeight="25.0" prefWidth="350.0">
@@ -30,15 +30,21 @@
                               <MenuItem mnemonicParsing="false" onAction="#ispisObiteljskogClana" text="Ispis" />
                           </items>
                       </Menu>
+                  <Menu mnemonicParsing="false" text="AdminPanel">
+                    <items>
+                        <MenuItem onAction="#showAllUsersScreen" mnemonicParsing="false" text="Users" />
+                      <MenuItem mnemonicParsing="false" text="Promjene" />
+                    </items>
+                  </Menu>
                   </menus>
               </MenuBar>
          </children>
       </HBox>
-        <Label text="Hey, Admin">
+        <Label alignment="CENTER" layoutX="300.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="71.0" text="Hey, Admin">
             <padding>
-                <Insets left="300.0" top="3.0" />
+                <Insets top="3.0" />
             </padding>
         </Label>
-      <Button layoutX="372.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="29.0" text="⌂" onAction="#homeScreen"/>
+      <Button layoutX="372.0" mnemonicParsing="false" onAction="#homeScreen" prefHeight="10.0" prefWidth="29.0" text="⌂" />
     </children>
 </AnchorPane>
