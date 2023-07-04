@@ -4,6 +4,8 @@ import hr.TheZuna.projekt.App;
 import hr.TheZuna.projekt.entitet.Prijatelj;
 import hr.TheZuna.projekt.entitet.Promjena;
 import hr.TheZuna.projekt.iznimke.DataSetException;
+import hr.TheZuna.projekt.util.LogLevel;
+import hr.TheZuna.projekt.util.RadnjaLoga;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -69,6 +71,7 @@ public class IspisOsobaController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            App.log(selectedPrijatelj, " ", LogLevel.INFO, RadnjaLoga.REMOVE);
 
         }catch (DataSetException ex){
             System.out.println(ex.getMessage());

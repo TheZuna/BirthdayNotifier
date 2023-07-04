@@ -23,10 +23,31 @@ public class MenuController {
         }
     }
     @FXML
+    public void ispisiOsobeForUser() {
+        BorderPane root;
+        try {
+            root =  (BorderPane)FXMLLoader.load(getClass().getResource("ispisOsoba2.fxml"));
+
+            App.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
     public void ispisiKolege() {
         BorderPane root;
         try {
             root =  (BorderPane)FXMLLoader.load(getClass().getResource("IspisKolega.fxml"));
+            App.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    public void ispisiKolegeForUser() {
+        BorderPane root;
+        try {
+            root =  (BorderPane)FXMLLoader.load(getClass().getResource("IspisKolega2.fxml"));
             App.setMainPage(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -43,7 +64,27 @@ public class MenuController {
         }
     }
     @FXML
+    public void ispisObiteljskogClanaForUser(){
+        BorderPane root;
+        try{
+            root = (BorderPane)FXMLLoader.load(getClass().getResource("ispisObiteljClan2.fxml"));
+            App.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
     public void homeScreen(){
+        BorderPane root;
+        try {
+            root =  (BorderPane)FXMLLoader.load(getClass().getResource("PrikazRodendana.fxml"));
+            App.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    public void homeScreenForUser(){
         BorderPane root;
         try {
             root =  (BorderPane)FXMLLoader.load(getClass().getResource("PrikazRodendana.fxml"));

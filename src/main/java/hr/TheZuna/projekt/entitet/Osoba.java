@@ -36,4 +36,11 @@ public class Osoba {
     public void setRodendan(LocalDate rodendan) {
         this.rodendan = rodendan;
     }
+    @Override
+    public String toString() {
+        return "Osoba{" +
+                "Ime=" + ime +
+                ", Prezime='" + prezime + '\'' +
+                '}';
+    }
 }

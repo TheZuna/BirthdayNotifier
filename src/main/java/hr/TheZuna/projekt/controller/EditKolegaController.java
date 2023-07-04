@@ -4,6 +4,8 @@ import hr.TheZuna.projekt.App;
 import hr.TheZuna.projekt.entitet.Kolega;
 import hr.TheZuna.projekt.entitet.Prijatelj;
 import hr.TheZuna.projekt.iznimke.DataSetException;
+import hr.TheZuna.projekt.util.LogLevel;
+import hr.TheZuna.projekt.util.RadnjaLoga;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -75,6 +77,7 @@ public class EditKolegaController {
                         datumRodenjaKolege.getValue()
                 ));
                 var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Editana");
+                App.log(kolegaZaEditat, " ", LogLevel.INFO, RadnjaLoga.EDIT);
                 alert.show();
                 BorderPane root;
                 try {
@@ -92,6 +95,7 @@ public class EditKolegaController {
             var alert = new Alert(Alert.AlertType.ERROR, mAlert);
             alert.setTitle("Error");
             alert.show();
+            App.log(kolegaZaEditat, " ", LogLevel.ERROR, RadnjaLoga.EDIT);
         }
     }
 

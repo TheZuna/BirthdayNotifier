@@ -4,6 +4,9 @@ import hr.TheZuna.projekt.App;
 import hr.TheZuna.projekt.entitet.Kolega;
 import hr.TheZuna.projekt.entitet.Prijatelj;
 import hr.TheZuna.projekt.iznimke.DataSetException;
+import hr.TheZuna.projekt.util.EmailValidator;
+import hr.TheZuna.projekt.util.LogLevel;
+import hr.TheZuna.projekt.util.RadnjaLoga;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -15,7 +18,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public class UnosKolegeController {
+public class UnosKolegeController{
     @FXML
     private TextField imeKolege;
     @FXML
@@ -58,6 +61,11 @@ public class UnosKolegeController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                App.log(new Kolega(
+                        imeKolege.getText(),
+                        prezimeKolege.getText(),
+                        brTelefonaKolege.getText(),
+                        datumRodenjaKolege.getValue()), " ", LogLevel.INFO, RadnjaLoga.UNOS);
             }catch (DataSetException ex ){
                 ex.getMessage();
             }

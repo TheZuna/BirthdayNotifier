@@ -11,34 +11,34 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.TheZuna.projekt.controller.MenuController">
     <children>
-        <HBox prefHeight="25.0" prefWidth="350.0">
-            <children>
-                <MenuBar minWidth="-Infinity" prefHeight="25.0" prefWidth="400.0">
-                    <menus>
-                        <Menu mnemonicParsing="false" text="Prijatelji">
-                            <items>
-                                <MenuItem mnemonicParsing="false" onAction="#ispisiOsobe" text="Ispis" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Kolege">
-                            <items>
-                                <MenuItem mnemonicParsing="false" onAction="#ispisiKolege" text="Ispis" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Obitelj">
-                            <items>
-                                <MenuItem mnemonicParsing="false" onAction="#ispisObiteljskogClana" text="Ispis" />
-                            </items>
-                        </Menu>
-                    </menus>
-                </MenuBar>
-            </children>
-        </HBox>
-      <Label text="Hey, User">
-         <padding>
-            <Insets left="300.0" top="3.0" />
-         </padding>
-      </Label>
-        <Button layoutX="372.0" mnemonicParsing="false" onAction="#homeScreen" prefHeight="10.0" prefWidth="29.0" text="⌂" />
+      <HBox prefHeight="25.0" prefWidth="350.0">
+         <children>
+              <MenuBar minWidth="-Infinity" prefHeight="25.0" prefWidth="400.0">
+                  <menus>
+                      <Menu mnemonicParsing="false" text="Prijatelji">
+                          <items>
+                              <MenuItem mnemonicParsing="false" onAction="#ispisiOsobeForUser" text="Ispis" />
+                          </items>
+                      </Menu>
+                      <Menu mnemonicParsing="false" text="Kolege">
+                          <items>
+                              <MenuItem mnemonicParsing="false" onAction="#ispisiKolegeForUser" text="Ispis" />
+                          </items>
+                      </Menu>
+                      <Menu mnemonicParsing="false" text="Obitelj">
+                          <items>
+                              <MenuItem mnemonicParsing="false" onAction="#ispisObiteljskogClanaForUser" text="Ispis" />
+                          </items>
+                      </Menu>
+                  </menus>
+              </MenuBar>
+         </children>
+      </HBox>
+        <Label alignment="CENTER" layoutX="300.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="71.0" text="Hey, User">
+            <padding>
+                <Insets top="3.0" />
+            </padding>
+        </Label>
+      <Button layoutX="372.0" mnemonicParsing="false" onAction="#homeScreenForUser" prefHeight="10.0" prefWidth="29.0" text="⌂" />
     </children>
 </AnchorPane>

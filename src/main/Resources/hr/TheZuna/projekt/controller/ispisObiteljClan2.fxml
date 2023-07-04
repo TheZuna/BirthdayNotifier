@@ -8,25 +8,9 @@
 <?import javafx.scene.layout.HBox?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.TheZuna.projekt.controller.IspisObiteljClanController">
-    <fx:include source="menu.fxml" />
+    <fx:include source="menu2.fxml" />
     <bottom>
         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <children>
-                <Button mnemonicParsing="false" onAction="#prikazUnosaObiteljskogClana" text="Unos">
-               <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin></Button>
-                <Button mnemonicParsing="false" onAction="#prikazEditaObiteljskogClana" text="Edit">
-                    <HBox.margin>
-                        <Insets right="10.0" />
-                    </HBox.margin>
-                </Button>
-                <Button mnemonicParsing="false" onAction="#removeObiteljskogClana" text="Remove">
-                    <HBox.margin>
-                        <Insets />
-                    </HBox.margin>
-                </Button>
-            </children>
         </HBox>
     </bottom>
    <left>

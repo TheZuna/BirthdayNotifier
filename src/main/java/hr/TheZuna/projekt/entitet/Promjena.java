@@ -8,15 +8,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-// class PromnjenaEntiteta<t>   implemenrs Promjena t moze biti osoba, user
-// ispisi serijalizar desira
 public class Promjena implements Serializable {
 
     String tipPromijene;
     Osoba osoba;
     LocalDate vrijemePromjene;
-
-
 
 
     public Promjena(String tipPromijene, Osoba osoba, LocalDate vrijemePromjene){

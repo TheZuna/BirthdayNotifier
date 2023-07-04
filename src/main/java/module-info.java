@@ -4,6 +4,7 @@ module hr.TheZuna.projekt {
     requires java.sql;
     requires javafx.graphics;
     requires java.desktop;
+    requires org.slf4j;
 
     exports hr.TheZuna.projekt.controller;
     opens hr.TheZuna.projekt.controller to javafx.fxml;

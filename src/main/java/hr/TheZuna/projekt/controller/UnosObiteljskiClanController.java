@@ -4,6 +4,8 @@ import hr.TheZuna.projekt.App;
 import hr.TheZuna.projekt.entitet.Kolega;
 import hr.TheZuna.projekt.entitet.ObiteljClan;
 import hr.TheZuna.projekt.iznimke.DataSetException;
+import hr.TheZuna.projekt.util.LogLevel;
+import hr.TheZuna.projekt.util.RadnjaLoga;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -50,6 +52,12 @@ public class UnosObiteljskiClanController {
                                 .withRodendan(datumRodenjaObiteljClanColumn.getValue())
                                 .build()
                 );
+                App.log(new ObiteljClan.Builder()
+                        .withIme(imeObiteljClanColumn.getText())
+                        .withPrezime(prezimeObiteljClanColumn.getText())
+                        .withAdresa(adresaObiteljClanColumn.getText())
+                        .withRodendan(datumRodenjaObiteljClanColumn.getValue())
+                        .build(), " ", LogLevel.INFO, RadnjaLoga.UNOS);
                 var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Unešena");
                 alert.show();
                 BorderPane root;
@@ -59,6 +67,7 @@ public class UnosObiteljskiClanController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
             }catch (DataSetException ex ){
                 ex.getMessage();
             }

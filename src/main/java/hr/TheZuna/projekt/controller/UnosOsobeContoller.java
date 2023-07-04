@@ -5,6 +5,10 @@ import hr.TheZuna.projekt.entitet.Osoba;
 import hr.TheZuna.projekt.entitet.Prijatelj;
 import hr.TheZuna.projekt.entitet.Promjena;
 import hr.TheZuna.projekt.iznimke.DataSetException;
+import hr.TheZuna.projekt.iznimke.NotAnEmailExeption;
+import hr.TheZuna.projekt.util.EmailValidator;
+import hr.TheZuna.projekt.util.LogLevel;
+import hr.TheZuna.projekt.util.RadnjaLoga;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -17,7 +21,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 
-public class UnosOsobeContoller {
+public class UnosOsobeContoller implements EmailValidator {
     @FXML
     private TextField imePrijatelja;
     @FXML
@@ -51,6 +55,9 @@ public class UnosOsobeContoller {
                         emailPrijatelja.getText(),
                         datumRodenjaPrijatelja.getValue()
                 );
+                if(EmailValidator.isValidEmail(emailPrijatelja.getText())){
+                    throw new NotAnEmailExeption("Korisnik je unio krivi email");
+                }
                 App.getDataSet().createPrijatelj(prijatelj);
                 var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Unešena");
                 alert.show();
@@ -61,11 +68,18 @@ public class UnosOsobeContoller {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                App.log(prijatelj, " ", LogLevel.INFO, RadnjaLoga.UNOS);
 
                 App.addToPromjene(new Promjena("UNOS", (Osoba) prijatelj, LocalDate.now()));
                 System.out.println(App.getAllPromjene());
             }catch (DataSetException ex ){
                 ex.getMessage();
+            }catch (NotAnEmailExeption ex){
+                App.log(new Prijatelj(
+                        imePrijatelja.getText(),
+                        prezimePrijatelja.getText(),
+                        emailPrijatelja.getText(),
+                        datumRodenjaPrijatelja.getValue()), " ", LogLevel.INFO, RadnjaLoga.UNOS);
             }
         }else {
             System.out.println("ERROR");

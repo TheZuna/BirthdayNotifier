@@ -4,6 +4,8 @@ import hr.TheZuna.projekt.App;
 import hr.TheZuna.projekt.entitet.ObiteljClan;
 import hr.TheZuna.projekt.entitet.Prijatelj;
 import hr.TheZuna.projekt.iznimke.DataSetException;
+import hr.TheZuna.projekt.util.LogLevel;
+import hr.TheZuna.projekt.util.RadnjaLoga;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -72,6 +74,7 @@ public class EditObiteljClanController {
                         datumRodenjaPrijatelja.getValue()
                 ));
                 var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Editana");
+                App.log(clanZaEditat, " ", LogLevel.INFO, RadnjaLoga.EDIT);
                 alert.show();
                 BorderPane root;
                 try {
@@ -89,6 +92,7 @@ public class EditObiteljClanController {
             var alert = new Alert(Alert.AlertType.ERROR, mAlert);
             alert.setTitle("Error");
             alert.show();
+            App.log(clanZaEditat, " ", LogLevel.ERROR, RadnjaLoga.EDIT);
         }
     }
 }

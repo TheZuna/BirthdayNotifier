@@ -3,6 +3,8 @@ package hr.TheZuna.projekt.controller;
 import hr.TheZuna.projekt.App;
 import hr.TheZuna.projekt.entitet.Prijatelj;
 import hr.TheZuna.projekt.iznimke.DataSetException;
+import hr.TheZuna.projekt.util.LogLevel;
+import hr.TheZuna.projekt.util.RadnjaLoga;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -72,6 +74,7 @@ public class EditOsobaController {
                 ));
                 var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Editana");
                 alert.show();
+                App.log(prijateljZaEditat, " ", LogLevel.INFO, RadnjaLoga.EDIT);
 
                 BorderPane root;
                 try {
@@ -89,6 +92,7 @@ public class EditOsobaController {
             var alert = new Alert(Alert.AlertType.ERROR, mAlert);
             alert.setTitle("Error");
             alert.show();
+            App.log(prijateljZaEditat, " ", LogLevel.ERROR, RadnjaLoga.EDIT);
         }
     }
 }
