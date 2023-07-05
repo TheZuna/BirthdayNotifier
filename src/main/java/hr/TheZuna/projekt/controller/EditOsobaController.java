@@ -6,6 +6,8 @@ import hr.TheZuna.projekt.entitet.Osoba;
 import hr.TheZuna.projekt.entitet.Prijatelj;
 import hr.TheZuna.projekt.entitet.Promjena;
 import hr.TheZuna.projekt.iznimke.DataSetException;
+import hr.TheZuna.projekt.iznimke.NotAnEmailExeption;
+import hr.TheZuna.projekt.util.EmailValidator;
 import hr.TheZuna.projekt.util.LogLevel;
 import hr.TheZuna.projekt.util.RadnjaLoga;
 import javafx.event.ActionEvent;
@@ -67,6 +69,11 @@ public class EditOsobaController {
         }
         if(emailPrijatelja.getText().isBlank()){
             messages.add("Polje Email Prijatelja je prazno! ");
+        }
+        try{
+            EmailValidator.isValidEmail(emailPrijatelja.getText());
+        }catch (NotAnEmailExeption ex){
+            messages.add("Email nije validan! ");
         }
         if(datumRodenjaPrijatelja.getValue() == null){
             messages.add("Polje Rodendan Prijatelja je prazno! ");

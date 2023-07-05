@@ -3,8 +3,10 @@ package hr.TheZuna.projekt.controller;
 import hr.TheZuna.projekt.App;
 import hr.TheZuna.projekt.entitet.*;
 import hr.TheZuna.projekt.iznimke.DataSetException;
-import hr.TheZuna.projekt.util.EmailValidator;
+import hr.TheZuna.projekt.iznimke.IncorrectPhoneNumberException;
+import hr.TheZuna.projekt.util.PhoneValidator;
 import hr.TheZuna.projekt.util.LogLevel;
+import hr.TheZuna.projekt.util.PhoneValidator;
 import hr.TheZuna.projekt.util.RadnjaLoga;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,6 +43,11 @@ public class UnosKolegeController{
         }
         if(brTelefonaKolege.getText().isBlank()){
             messages.add("Polje broj telefona Kolege je prazno! ");
+        }
+        try{
+            PhoneValidator.isValidNumber(brTelefonaKolege.getText());
+        }catch (IncorrectPhoneNumberException ex){
+            messages.add("Telefonski broj nije validan!");
         }
         if(datumRodenjaKolege.getValue() == null){
             messages.add("Polje Rodendan Kolege je prazno! ");

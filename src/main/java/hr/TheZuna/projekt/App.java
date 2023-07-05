@@ -5,7 +5,6 @@ import hr.TheZuna.projekt.baza.DataSetovi;
 import hr.TheZuna.projekt.controller.IspisPromjenaController;
 import hr.TheZuna.projekt.entitet.*;
 import hr.TheZuna.projekt.iznimke.DataSetException;
-import hr.TheZuna.projekt.iznimke.OsobaMladaOd18;
 import hr.TheZuna.projekt.users.User;
 import hr.TheZuna.projekt.util.LogLevel;
 import hr.TheZuna.projekt.util.RadnjaLoga;
