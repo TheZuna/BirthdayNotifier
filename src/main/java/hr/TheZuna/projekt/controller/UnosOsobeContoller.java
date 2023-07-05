@@ -1,6 +1,7 @@
 package hr.TheZuna.projekt.controller;
 
 import hr.TheZuna.projekt.App;
+import hr.TheZuna.projekt.entitet.LogEntry;
 import hr.TheZuna.projekt.entitet.Osoba;
 import hr.TheZuna.projekt.entitet.Prijatelj;
 import hr.TheZuna.projekt.entitet.Promjena;
@@ -77,7 +78,7 @@ public class UnosOsobeContoller implements EmailValidator {
                     var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Unešena");
                     alert.show();
 
-                    App.log(prijatelj, " ", LogLevel.INFO, RadnjaLoga.UNOS);
+                    App.log(new LogEntry(prijatelj), " ", LogLevel.INFO, RadnjaLoga.UNOS);
                     App.addToPromjene(new Promjena("UNOS", (Osoba) prijatelj, LocalDate.now(), App.getCurrentUser()));
 
                     BorderPane root;

@@ -1,10 +1,7 @@
 package hr.TheZuna.projekt.controller;
 
 import hr.TheZuna.projekt.App;
-import hr.TheZuna.projekt.entitet.ObiteljClan;
-import hr.TheZuna.projekt.entitet.Osoba;
-import hr.TheZuna.projekt.entitet.Prijatelj;
-import hr.TheZuna.projekt.entitet.Promjena;
+import hr.TheZuna.projekt.entitet.*;
 import hr.TheZuna.projekt.iznimke.DataSetException;
 import hr.TheZuna.projekt.util.LogLevel;
 import hr.TheZuna.projekt.util.RadnjaLoga;
@@ -80,11 +77,11 @@ public class EditObiteljClanController {
                         datumRodenjaPrijatelja.getValue());
                 App.getDataSet().editObiteljClan(clanZaEditat,clan);
 
-                App.log(clan, " ", LogLevel.INFO, RadnjaLoga.EDIT);
+                App.log(new LogEntry(clan), " ", LogLevel.INFO, RadnjaLoga.EDIT);
                 App.addToPromjene(new Promjena("EDIT", (Osoba) clan, LocalDate.now(), App.getCurrentUser()));
 
                 var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Editana");
-                App.log(clanZaEditat, " ", LogLevel.INFO, RadnjaLoga.EDIT);
+                App.log(new LogEntry(clanZaEditat), " ", LogLevel.INFO, RadnjaLoga.EDIT);
                 alert.show();
                 BorderPane root;
                 try {
@@ -102,7 +99,7 @@ public class EditObiteljClanController {
             var alert = new Alert(Alert.AlertType.ERROR, mAlert);
             alert.setTitle("Error");
             alert.show();
-            App.log(clanZaEditat, " ", LogLevel.ERROR, RadnjaLoga.EDIT);
+            App.log(new LogEntry(clanZaEditat), " ", LogLevel.ERROR, RadnjaLoga.EDIT);
         }
     }
 }

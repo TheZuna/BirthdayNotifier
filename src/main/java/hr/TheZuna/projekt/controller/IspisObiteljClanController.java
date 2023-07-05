@@ -1,10 +1,7 @@
 package hr.TheZuna.projekt.controller;
 
 import hr.TheZuna.projekt.App;
-import hr.TheZuna.projekt.entitet.Kolega;
-import hr.TheZuna.projekt.entitet.ObiteljClan;
-import hr.TheZuna.projekt.entitet.Osoba;
-import hr.TheZuna.projekt.entitet.Promjena;
+import hr.TheZuna.projekt.entitet.*;
 import hr.TheZuna.projekt.iznimke.DataSetException;
 import hr.TheZuna.projekt.util.LogLevel;
 import hr.TheZuna.projekt.util.RadnjaLoga;
@@ -75,7 +72,7 @@ public class IspisObiteljClanController {
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 try {
                     App.getDataSet().removeObiteljskiClan(selectedObiteljskiClan);
-                    App.log(selectedObiteljskiClan, " ", LogLevel.INFO, RadnjaLoga.REMOVE);
+                    App.log(new LogEntry(selectedObiteljskiClan), " ", LogLevel.INFO, RadnjaLoga.REMOVE);
                     App.addToPromjene(new Promjena("REMOVE", (Osoba) selectedObiteljskiClan, LocalDate.now(), App.getCurrentUser()));
 
                     var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Izbrisana");

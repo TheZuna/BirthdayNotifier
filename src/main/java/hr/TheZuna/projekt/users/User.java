@@ -2,7 +2,7 @@ package hr.TheZuna.projekt.users;
 
 import java.io.Serializable;
 
-public class User implements Serializable {
+public class User implements Serializable, Loggable {
     private String username;
     private String password;
     private UserRole role;
@@ -41,5 +41,8 @@ public class User implements Serializable {
         return "User{" +
                 "Ime=" + username + '\'' +
                 '}';
+    }
+    public String entityDescription() {
+        return this.toString();
     }
 }

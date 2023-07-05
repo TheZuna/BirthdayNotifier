@@ -1,10 +1,7 @@
 package hr.TheZuna.projekt.controller;
 
 import hr.TheZuna.projekt.App;
-import hr.TheZuna.projekt.entitet.Kolega;
-import hr.TheZuna.projekt.entitet.ObiteljClan;
-import hr.TheZuna.projekt.entitet.Osoba;
-import hr.TheZuna.projekt.entitet.Promjena;
+import hr.TheZuna.projekt.entitet.*;
 import hr.TheZuna.projekt.iznimke.DataSetException;
 import hr.TheZuna.projekt.util.LogLevel;
 import hr.TheZuna.projekt.util.RadnjaLoga;
@@ -65,7 +62,7 @@ public class UnosObiteljskiClanController {
                             .build();
 
                     App.getDataSet().createObiteljskiClan(clan);
-                    App.log(clan, " ", LogLevel.INFO, RadnjaLoga.UNOS);
+                    App.log(new LogEntry(clan), " ", LogLevel.INFO, RadnjaLoga.UNOS);
                     App.addToPromjene(new Promjena("UNOS", (Osoba) clan, LocalDate.now(), App.getCurrentUser()));
 
                     var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Unešena");

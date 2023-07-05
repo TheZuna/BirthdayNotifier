@@ -1,10 +1,7 @@
 package hr.TheZuna.projekt.controller;
 
 import hr.TheZuna.projekt.App;
-import hr.TheZuna.projekt.entitet.Kolega;
-import hr.TheZuna.projekt.entitet.Osoba;
-import hr.TheZuna.projekt.entitet.Prijatelj;
-import hr.TheZuna.projekt.entitet.Promjena;
+import hr.TheZuna.projekt.entitet.*;
 import hr.TheZuna.projekt.iznimke.DataSetException;
 import hr.TheZuna.projekt.util.EmailValidator;
 import hr.TheZuna.projekt.util.LogLevel;
@@ -66,7 +63,7 @@ public class UnosKolegeController{
                             datumRodenjaKolege.getValue());
 
                     App.getDataSet().createKolega(kolega);
-                    App.log(kolega, " ", LogLevel.INFO, RadnjaLoga.UNOS);
+                    App.log(new LogEntry(kolega), " ", LogLevel.INFO, RadnjaLoga.UNOS);
                     App.addToPromjene(new Promjena("UNOS", (Osoba) kolega, LocalDate.now(), App.getCurrentUser()));
 
                     var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Unešena");

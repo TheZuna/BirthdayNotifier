@@ -1,9 +1,11 @@
 package hr.TheZuna.projekt.entitet;
 
+import hr.TheZuna.projekt.users.Loggable;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Osoba implements Serializable {
+public class Osoba implements Serializable, Loggable {
 
     private String ime, prezime;
     private LocalDate rodendan;
@@ -43,5 +45,8 @@ public class Osoba implements Serializable {
                 "Ime=" + ime +
                 ", Prezime='" + prezime + '\'' +
                 '}';
+    }
+    public String entityDescription() {
+        return this.toString();
     }
 }

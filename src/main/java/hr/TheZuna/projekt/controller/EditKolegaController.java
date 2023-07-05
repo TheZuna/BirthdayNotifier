@@ -1,10 +1,7 @@
 package hr.TheZuna.projekt.controller;
 
 import hr.TheZuna.projekt.App;
-import hr.TheZuna.projekt.entitet.Kolega;
-import hr.TheZuna.projekt.entitet.Osoba;
-import hr.TheZuna.projekt.entitet.Prijatelj;
-import hr.TheZuna.projekt.entitet.Promjena;
+import hr.TheZuna.projekt.entitet.*;
 import hr.TheZuna.projekt.iznimke.DataSetException;
 import hr.TheZuna.projekt.util.LogLevel;
 import hr.TheZuna.projekt.util.RadnjaLoga;
@@ -82,11 +79,11 @@ public class EditKolegaController {
                         datumRodenjaKolege.getValue());
                 App.getDataSet().editKolega(kolegaZaEditat, kolega);
 
-                App.log(kolega, " ", LogLevel.INFO, RadnjaLoga.EDIT);
+                App.log(new LogEntry(kolega), " ", LogLevel.INFO, RadnjaLoga.EDIT);
                 App.addToPromjene(new Promjena("EDIT", (Osoba) kolega, LocalDate.now(), App.getCurrentUser()));
 
                 var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Editana");
-                App.log(kolegaZaEditat, " ", LogLevel.INFO, RadnjaLoga.EDIT);
+                App.log(new LogEntry(kolegaZaEditat), " ", LogLevel.INFO, RadnjaLoga.EDIT);
                 alert.show();
                 BorderPane root;
                 try {
@@ -104,7 +101,7 @@ public class EditKolegaController {
             var alert = new Alert(Alert.AlertType.ERROR, mAlert);
             alert.setTitle("Error");
             alert.show();
-            App.log(kolegaZaEditat, " ", LogLevel.ERROR, RadnjaLoga.EDIT);
+            App.log(new LogEntry(kolegaZaEditat), " ", LogLevel.ERROR, RadnjaLoga.EDIT);
         }
     }
 }

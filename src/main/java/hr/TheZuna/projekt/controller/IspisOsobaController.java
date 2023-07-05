@@ -1,6 +1,7 @@
 package hr.TheZuna.projekt.controller;
 
 import hr.TheZuna.projekt.App;
+import hr.TheZuna.projekt.entitet.LogEntry;
 import hr.TheZuna.projekt.entitet.Osoba;
 import hr.TheZuna.projekt.entitet.Prijatelj;
 import hr.TheZuna.projekt.entitet.Promjena;
@@ -76,7 +77,7 @@ public class IspisOsobaController {
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 try {
                     App.getDataSet().removePrijatelj(selectedPrijatelj);
-                    App.log(selectedPrijatelj, " ", LogLevel.INFO, RadnjaLoga.REMOVE);
+                    App.log(new LogEntry(selectedPrijatelj), " ", LogLevel.INFO, RadnjaLoga.REMOVE);
                     App.addToPromjene(new Promjena("REMOVE", (Osoba) selectedPrijatelj, LocalDate.now(), App.getCurrentUser()));
 
                     var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Izbrisana");

@@ -1,6 +1,7 @@
 package hr.TheZuna.projekt.controller;
 
 import hr.TheZuna.projekt.App;
+import hr.TheZuna.projekt.entitet.LogEntry;
 import hr.TheZuna.projekt.entitet.Osoba;
 import hr.TheZuna.projekt.entitet.Prijatelj;
 import hr.TheZuna.projekt.entitet.Promjena;
@@ -81,12 +82,11 @@ public class EditOsobaController {
 
                 App.getDataSet().editPrijatelj(prijateljZaEditat, prijatelj);
 
-                App.log(prijateljZaEditat, " ", LogLevel.INFO, RadnjaLoga.EDIT);
+                App.log(new LogEntry(prijateljZaEditat), " ", LogLevel.INFO, RadnjaLoga.EDIT);
                 App.addToPromjene(new Promjena("EDIT", (Osoba) prijateljZaEditat, LocalDate.now(), App.getCurrentUser()));
 
                 var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Editana");
                 alert.show();
-                App.log(prijateljZaEditat, " ", LogLevel.INFO, RadnjaLoga.EDIT);
 
                 BorderPane root;
                 try {
@@ -104,7 +104,7 @@ public class EditOsobaController {
             var alert = new Alert(Alert.AlertType.ERROR, mAlert);
             alert.setTitle("Error");
             alert.show();
-            App.log(prijateljZaEditat, " ", LogLevel.ERROR, RadnjaLoga.EDIT);
+            App.log(new LogEntry(prijateljZaEditat), " ", LogLevel.ERROR, RadnjaLoga.EDIT);
         }
     }
 }

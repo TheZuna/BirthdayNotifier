@@ -171,7 +171,6 @@ public class App extends Application {
             dataSetovi = data;
             launch();
 
-
         }catch (DataSetException ex){
             var upozorenje = new Alert(Alert.AlertType.ERROR, "Connection failed to database", ButtonType.OK);
             upozorenje.setTitle("Error");
@@ -204,19 +203,19 @@ public class App extends Application {
     public static Object getPromjeneLock() {
         return lock;
     }
-    public static <T> void log(T osoba, String poruka, LogLevel logLevel, RadnjaLoga radnja) {
+    public static  void log(LogEntry entity, String poruka, LogLevel logLevel, RadnjaLoga radnja) {
         switch (logLevel) {
             case INFO:
-                logger.info(poruka + " " + radnja + " " + osoba.toString());
+                logger.info(poruka + " " + radnja + " " + entity.logDescription());
                 break;
             case WARNING:
-                logger.warn(poruka + " " + radnja + " " + osoba.toString());
+                logger.warn(poruka + " " + radnja + " " + entity.logDescription());
                 break;
             case ERROR:
-                logger.error(poruka + " " + radnja + " " + osoba.toString());
+                logger.error(poruka + " " + radnja + " " + entity.logDescription());
                 break;
             default:
-                logger.info(poruka + " " + radnja + " " + osoba.toString());
+                logger.info(poruka + " " + radnja + " " + entity.logDescription());
                 break;
         }
     }

@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import hr.TheZuna.projekt.App;
+import hr.TheZuna.projekt.entitet.LogEntry;
 import hr.TheZuna.projekt.iznimke.IncorrectPasswordException;
 import hr.TheZuna.projekt.users.User;
 import hr.TheZuna.projekt.users.UserAuthentication;
@@ -56,7 +57,7 @@ public final class UserAuthenticationController implements Md5Hashing {
                         e.printStackTrace();
                     }
                     App.setCurrentUser(new User(username.getText(), password.getText(), UserRole.ADMIN));
-                    App.log(new User(username.getText(), password.getText(), UserRole.ADMIN), " ", LogLevel.INFO, RadnjaLoga.LOGIN);
+                    App.log(new LogEntry(new User(username.getText(), password.getText(), UserRole.ADMIN)), " ", LogLevel.INFO, RadnjaLoga.LOGIN);
                 }else {
                     try{
                         root =  (BorderPane) FXMLLoader.load(getClass().getResource("PrikazRodendana2.fxml"));
@@ -65,7 +66,7 @@ public final class UserAuthenticationController implements Md5Hashing {
                         e.printStackTrace();
                     }
                     App.setCurrentUser(new User(username.getText(), password.getText(), UserRole.USER));
-                    App.log(new User(username.getText(), password.getText(), UserRole.USER), " ", LogLevel.INFO, RadnjaLoga.LOGIN);
+                    App.log(new LogEntry(new User(username.getText(), password.getText(), UserRole.ADMIN)), " ", LogLevel.INFO, RadnjaLoga.LOGIN);
                 }
 
             } else {
@@ -78,7 +79,7 @@ public final class UserAuthenticationController implements Md5Hashing {
                 try{
                     throw new IncorrectPasswordException("Krivi password");
                 }catch (IncorrectPasswordException ex){
-                    App.log(new User(username.getText(), password.getText(), null), "krivi passowrd ", LogLevel.INFO, RadnjaLoga.LOGIN);
+                    App.log(new LogEntry(new User(username.getText(), password.getText(), null)), "krivi passowrd ", LogLevel.INFO, RadnjaLoga.LOGIN);
                 }
             }
         } else {
