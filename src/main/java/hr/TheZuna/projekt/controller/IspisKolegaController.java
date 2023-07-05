@@ -15,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class IspisKolegaController {
 
@@ -68,27 +70,41 @@ public class IspisKolegaController {
 
     @FXML
     public void removeOdabraniKolege() {
-        try {
-            Kolega selectedKolega = kolegeTableView.getSelectionModel().getSelectedItem();
-            App.getDataSet().removeKolega(selectedKolega);
+        Kolega selectedKolega = kolegeTableView.getSelectionModel().getSelectedItem();
+        if (selectedKolega != null) {
+            Alert confirmDialog = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmDialog.setTitle("Potvrda");
+            confirmDialog.setHeaderText("Jeste li sigurni da želite izbrisati odabranog kolegu?");
+            confirmDialog.setContentText("Kliknite OK za potvrdu ili Cancel za odustajanje.");
 
-            App.log(selectedKolega, " ", LogLevel.INFO, RadnjaLoga.REMOVE);
-            App.addToPromjene(new Promjena("REMOVE", (Osoba) selectedKolega, LocalDate.now(), App.getCurrentUser()));
+            Optional<ButtonType> result = confirmDialog.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                try {
+                    App.getDataSet().removeKolega(selectedKolega);
+                    App.log(selectedKolega, " ", LogLevel.INFO, RadnjaLoga.REMOVE);
+                    App.addToPromjene(new Promjena("REMOVE", (Osoba) selectedKolega, LocalDate.now(), App.getCurrentUser()));
 
-            var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Izbrisana");
-            alert.show();
-            BorderPane root;
-            try {
-                root =  (BorderPane)FXMLLoader.load(getClass().getResource("IspisKolega.fxml"));
-                App.setMainPage(root);
-            } catch (IOException e) {
-                e.printStackTrace();
+                    var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Izbrisana");
+                    alert.show();
+
+                    BorderPane root;
+                    try {
+                        root = (BorderPane) FXMLLoader.load(getClass().getResource("IspisKolega.fxml"));
+                        App.setMainPage(root);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    App.log(selectedKolega, " ", LogLevel.INFO, RadnjaLoga.REMOVE);
+                } catch (DataSetException ex) {
+                    System.out.println(ex.getMessage());
+                }
             }
-            App.log(selectedKolega, " ", LogLevel.INFO, RadnjaLoga.REMOVE);
-        } catch (DataSetException ex) {
-            System.out.println(ex.getMessage());
+        } else {
+            var alert = new Alert(Alert.AlertType.WARNING, "Niste odabrali kolegu za brisanje.");
+            alert.setTitle("Upozorenje");
+            alert.show();
         }
-
     }
 
     @FXML

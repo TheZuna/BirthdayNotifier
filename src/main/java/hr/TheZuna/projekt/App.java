@@ -13,11 +13,12 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -58,13 +59,21 @@ public class App extends Application {
         logger.info("Aplikacije je pocela");
 
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("controller/loginPage.fxml"));
+        Parent root = fxmlLoader.load();
+
+        Image backgroundImage = new Image(getClass().getResourceAsStream("images/background.jpg"));
+        BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background backgroundStyle = new Background(background);
+
+        Pane container = new Pane(root);
+        container.setBackground(backgroundStyle);
 
         stage = primaryStage;
 
 
         stage.getIcons().add(new Image(App.class.getResourceAsStream("birthday.png")));
 
-        Scene scene = new Scene(fxmlLoader.load(), 400, 500);
+        Scene scene = new Scene(container, 400, 500);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
@@ -103,7 +112,9 @@ public class App extends Application {
                        slavljenickiMessage.append(o.getIme()).append(" ").append(o.getPrezime()).append("\n");
                    }
                    Platform.runLater(() -> {
-                       var alert = new Alert(Alert.AlertType.INFORMATION, "Danas je rodenan : \n" + slavljenickiMessage );
+                       var alert = new Alert(Alert.AlertType.INFORMATION, " \n" + slavljenickiMessage );
+                       alert.setTitle("ROĐENDANI");
+                       alert.setHeaderText("Danas je rodenan :");
                        alert.show();
                    });
                    slavljeniciLock.unlock();
@@ -130,6 +141,8 @@ public class App extends Application {
             }
         });
         serializirajPromjeneListThread.start();
+
+
         Thread deserializirajPromjeneListThread = new Thread(() -> {
             while (true){
                 try {

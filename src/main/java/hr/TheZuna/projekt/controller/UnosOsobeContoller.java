@@ -12,6 +12,7 @@ import hr.TheZuna.projekt.util.RadnjaLoga;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -19,6 +20,7 @@ import javafx.scene.layout.BorderPane;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Optional;
 
 
 public class UnosOsobeContoller implements EmailValidator {
@@ -43,43 +45,55 @@ public class UnosOsobeContoller implements EmailValidator {
         if(emailPrijatelja.getText().isBlank()){
             messages.add("Polje Email Prijatelja je prazno! ");
         }
+        try{
+            EmailValidator.isValidEmail(emailPrijatelja.getText());
+        }catch (NotAnEmailExeption ex){
+            messages.add("Email nije validan! ");
+        }
         if(datumRodenjaPrijatelja.getValue() == null){
             messages.add("Polje Rodendan Prijatelja je prazno! ");
         }
         if (messages.size() == 0){
             System.out.println("NEMA ERRORA");
-            try {
-                Prijatelj prijatelj = new Prijatelj(
-                        imePrijatelja.getText(),
-                        prezimePrijatelja.getText(),
-                        emailPrijatelja.getText(),
-                        datumRodenjaPrijatelja.getValue()
-                );
-                /*
-                if(EmailValidator.isValidEmail(emailPrijatelja.getText())){
-                    throw new NotAnEmailExeption("Korisnik je unio krivi email");
-                }
 
-                 */
-                App.getDataSet().createPrijatelj(prijatelj);
-                var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Unešena");
-                alert.show();
+            // Create a confirmation dialog
+            Alert confirmDialog = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmDialog.setTitle("Potvrda");
+            confirmDialog.setHeaderText("Jeste li sigurni da želite unijeti prijatelja?");
+            confirmDialog.setContentText("Kliknite OK za potvrdu ili Cancel za odustajanje.");
 
-                App.log(prijatelj, " ", LogLevel.INFO, RadnjaLoga.UNOS);
-                App.addToPromjene(new Promjena("UNOS", (Osoba) prijatelj, LocalDate.now(), App.getCurrentUser()));
-                //System.out.println(App.getAllPromjene());
+            // Get the user's response
+            Optional<ButtonType> result = confirmDialog.showAndWait();
 
-                BorderPane root;
+            if (result.isPresent() && result.get() == ButtonType.OK) {
                 try {
-                    root =  (BorderPane) FXMLLoader.load(getClass().getResource("ispisOsoba.fxml"));
-                    App.setMainPage(root);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    Prijatelj prijatelj = new Prijatelj(
+                            imePrijatelja.getText(),
+                            prezimePrijatelja.getText(),
+                            emailPrijatelja.getText(),
+                            datumRodenjaPrijatelja.getValue()
+                    );
+                    App.getDataSet().createPrijatelj(prijatelj);
+                    var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Unešena");
+                    alert.show();
+
+                    App.log(prijatelj, " ", LogLevel.INFO, RadnjaLoga.UNOS);
+                    App.addToPromjene(new Promjena("UNOS", (Osoba) prijatelj, LocalDate.now(), App.getCurrentUser()));
+
+                    BorderPane root;
+                    try {
+                        root = (BorderPane) FXMLLoader.load(getClass().getResource("ispisOsoba.fxml"));
+                        App.setMainPage(root);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } catch (DataSetException ex) {
+                    ex.getMessage();
                 }
-            }catch (DataSetException ex ){
-                ex.getMessage();
+            } else {
+                System.out.println("Odustajanje");
             }
-        }else {
+        } else {
             System.out.println("ERROR");
             String mAlert = String.join("\n", messages);
             var alert = new Alert(Alert.AlertType.ERROR, mAlert);

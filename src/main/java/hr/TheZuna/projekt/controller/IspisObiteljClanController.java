@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
@@ -20,6 +21,7 @@ import javafx.scene.layout.BorderPane;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class IspisObiteljClanController {
 
@@ -62,25 +64,38 @@ public class IspisObiteljClanController {
 
     @FXML
     public void removeObiteljskogClana() {
-        try {
-            ObiteljClan selectedObiteljskiClan = obiteljClanTableView.getSelectionModel().getSelectedItem();
-            App.getDataSet().removeObiteljskiClan(selectedObiteljskiClan);
+        ObiteljClan selectedObiteljskiClan = obiteljClanTableView.getSelectionModel().getSelectedItem();
+        if (selectedObiteljskiClan != null) {
+            Alert confirmDialog = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmDialog.setTitle("Potvrda");
+            confirmDialog.setHeaderText("Jeste li sigurni da želite izbrisati odabranog obiteljskog člana?");
+            confirmDialog.setContentText("Kliknite OK za potvrdu ili Cancel za odustajanje.");
 
-            App.log(selectedObiteljskiClan, " ", LogLevel.INFO, RadnjaLoga.REMOVE);
-            App.addToPromjene(new Promjena("REMOVE", (Osoba) selectedObiteljskiClan, LocalDate.now(), App.getCurrentUser()));
+            Optional<ButtonType> result = confirmDialog.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                try {
+                    App.getDataSet().removeObiteljskiClan(selectedObiteljskiClan);
+                    App.log(selectedObiteljskiClan, " ", LogLevel.INFO, RadnjaLoga.REMOVE);
+                    App.addToPromjene(new Promjena("REMOVE", (Osoba) selectedObiteljskiClan, LocalDate.now(), App.getCurrentUser()));
 
-            var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Izbrisana");
-            alert.show();
-            BorderPane root;
-            try {
-                root =  (BorderPane) FXMLLoader.load(getClass().getResource("ispisObiteljClan.fxml"));
-                App.setMainPage(root);
-            } catch (IOException e) {
-                e.printStackTrace();
+                    var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Izbrisana");
+                    alert.show();
+
+                    BorderPane root;
+                    try {
+                        root = (BorderPane) FXMLLoader.load(getClass().getResource("ispisObiteljClan.fxml"));
+                        App.setMainPage(root);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } catch (DataSetException ex) {
+                    System.out.println(ex.getMessage());
+                }
             }
-
-        } catch (DataSetException ex) {
-            System.out.println(ex.getMessage());
+        } else {
+            var alert = new Alert(Alert.AlertType.WARNING, "Niste odabrali obiteljskog člana za brisanje.");
+            alert.setTitle("Upozorenje");
+            alert.show();
         }
     }
 

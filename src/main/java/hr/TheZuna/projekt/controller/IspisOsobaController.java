@@ -12,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 
 public class IspisOsobaController {
@@ -63,30 +65,39 @@ public class IspisOsobaController {
     }
     @FXML
     public void removeOdabraniPrijatelj() {
-        try{
-            Prijatelj selectedPrijatelj = prijateljTableView.getSelectionModel().getSelectedItem();
-            App.getDataSet().removePrijatelj(selectedPrijatelj);
+        Prijatelj selectedPrijatelj = prijateljTableView.getSelectionModel().getSelectedItem();
+        if (selectedPrijatelj != null) {
+            Alert confirmDialog = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmDialog.setTitle("Potvrda");
+            confirmDialog.setHeaderText("Jeste li sigurni da želite izbrisati odabranog prijatelja?");
+            confirmDialog.setContentText("Kliknite OK za potvrdu ili Cancel za odustajanje.");
 
+            Optional<ButtonType> result = confirmDialog.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                try {
+                    App.getDataSet().removePrijatelj(selectedPrijatelj);
+                    App.log(selectedPrijatelj, " ", LogLevel.INFO, RadnjaLoga.REMOVE);
+                    App.addToPromjene(new Promjena("REMOVE", (Osoba) selectedPrijatelj, LocalDate.now(), App.getCurrentUser()));
 
-            App.log(selectedPrijatelj, " ", LogLevel.INFO, RadnjaLoga.REMOVE);
-            App.addToPromjene(new Promjena("REMOVE", (Osoba) selectedPrijatelj, LocalDate.now(), App.getCurrentUser()));
+                    var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Izbrisana");
+                    alert.show();
 
-            var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Izbrisana");
-            alert.show();
-
-            BorderPane root;
-            try {
-                root =  (BorderPane) FXMLLoader.load(getClass().getResource("ispisOsoba.fxml"));
-                App.setMainPage(root);
-            } catch (IOException e) {
-                e.printStackTrace();
+                    BorderPane root;
+                    try {
+                        root = (BorderPane) FXMLLoader.load(getClass().getResource("ispisOsoba.fxml"));
+                        App.setMainPage(root);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } catch (DataSetException ex) {
+                    System.out.println(ex.getMessage());
+                }
             }
-            App.log(selectedPrijatelj, " ", LogLevel.INFO, RadnjaLoga.REMOVE);
-
-        }catch (DataSetException ex){
-            System.out.println(ex.getMessage());
+        } else {
+            var alert = new Alert(Alert.AlertType.WARNING, "Niste odabrali prijatelja za brisanje.");
+            alert.setTitle("Upozorenje");
+            alert.show();
         }
-
     }
     @FXML
     public void prikazEditaPrijatelja(){

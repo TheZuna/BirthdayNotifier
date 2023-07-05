@@ -12,6 +12,7 @@ import hr.TheZuna.projekt.util.RadnjaLoga;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class UnosKolegeController{
     @FXML
@@ -46,35 +48,43 @@ public class UnosKolegeController{
         if(datumRodenjaKolege.getValue() == null){
             messages.add("Polje Rodendan Kolege je prazno! ");
         }
-        if (messages.size() == 0){
+        if (messages.size() == 0) {
             System.out.println("NEMA ERRORA");
-            try {
-                Kolega kolega = new Kolega(
-                        imeKolege.getText(),
-                        prezimeKolege.getText(),
-                        brTelefonaKolege.getText(),
-                        datumRodenjaKolege.getValue());
 
-                App.getDataSet().createKolega(kolega);
-                App.log(kolega, " ", LogLevel.INFO, RadnjaLoga.UNOS);
-                App.addToPromjene(new Promjena("UNOS", (Osoba) kolega, LocalDate.now(), App.getCurrentUser()));
+            Alert confirmDialog = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmDialog.setTitle("Potvrda");
+            confirmDialog.setHeaderText("Jeste li sigurni da želite unijeti kolegu?");
+            confirmDialog.setContentText("Kliknite OK za potvrdu ili Cancel za odustajanje.");
 
-                var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Unešena");
-                alert.show();
-
-                BorderPane root;
+            Optional<ButtonType> result = confirmDialog.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
                 try {
-                    root =  (BorderPane) FXMLLoader.load(getClass().getResource("IspisKolega.fxml"));
-                    App.setMainPage(root);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    Kolega kolega = new Kolega(
+                            imeKolege.getText(),
+                            prezimeKolege.getText(),
+                            brTelefonaKolege.getText(),
+                            datumRodenjaKolege.getValue());
+
+                    App.getDataSet().createKolega(kolega);
+                    App.log(kolega, " ", LogLevel.INFO, RadnjaLoga.UNOS);
+                    App.addToPromjene(new Promjena("UNOS", (Osoba) kolega, LocalDate.now(), App.getCurrentUser()));
+
+                    var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Unešena");
+                    alert.show();
+
+                    BorderPane root;
+                    try {
+                        root = (BorderPane) FXMLLoader.load(getClass().getResource("IspisKolega.fxml"));
+                        App.setMainPage(root);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                } catch (DataSetException ex) {
+                    ex.getMessage();
                 }
-
-
-            }catch (DataSetException ex ){
-                ex.getMessage();
             }
-        }else {
+        } else {
             System.out.println("ERROR");
             String mAlert = String.join("\n", messages);
             var alert = new Alert(Alert.AlertType.ERROR, mAlert);
