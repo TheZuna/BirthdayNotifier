@@ -17,17 +17,17 @@
                   <menus>
                       <Menu mnemonicParsing="false" text="Prijatelji">
                           <items>
-                              <MenuItem mnemonicParsing="false" onAction="#ispisiOsobeForUser" text="Ispis" />
+                              <MenuItem mnemonicParsing="false" onAction="#ispisiOsobeForUser" text="Prikaz" />
                           </items>
                       </Menu>
                       <Menu mnemonicParsing="false" text="Kolege">
                           <items>
-                              <MenuItem mnemonicParsing="false" onAction="#ispisiKolegeForUser" text="Ispis" />
+                              <MenuItem mnemonicParsing="false" onAction="#ispisiKolegeForUser" text="Prikaz" />
                           </items>
                       </Menu>
                       <Menu mnemonicParsing="false" text="Obitelj">
                           <items>
-                              <MenuItem mnemonicParsing="false" onAction="#ispisObiteljskogClanaForUser" text="Ispis" />
+                              <MenuItem mnemonicParsing="false" onAction="#ispisObiteljskogClanaForUser" text="Prikaz" />
                           </items>
                       </Menu>
                   </menus>

@@ -8,12 +8,21 @@ import java.time.LocalDate;
 public class Osoba implements Serializable, Loggable {
 
     private String ime, prezime;
+    int id;
     private LocalDate rodendan;
 
     public Osoba(String ime, String prezime, LocalDate rodendan) {
         this.ime = ime;
         this.prezime = prezime;
         this.rodendan = rodendan;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getIme() {

@@ -49,6 +49,7 @@ public class BazePodataka implements DataSetovi, Closeable {
                     String brTelefona = results.getString("brTelefona");
                     LocalDate rodendan = results.getDate("datum_rodjenja").toLocalDate();
                     Kolega noviKolega = new Kolega(ime, prezime, brTelefona, rodendan);
+                    noviKolega.setId(results.getInt("ID"));
                     kolega.add(noviKolega);
                 }
             }
@@ -74,6 +75,7 @@ public class BazePodataka implements DataSetovi, Closeable {
                     String email = results.getString("email");
                     LocalDate rodendan = results.getDate("datum_rodjenja").toLocalDate();
                     Prijatelj noviPrijatelj = new Prijatelj(ime, prezime, email, rodendan);
+                    noviPrijatelj.setId(results.getInt("ID"));
                     prijatelji.add(noviPrijatelj);
                 }
             }
@@ -105,6 +107,7 @@ public class BazePodataka implements DataSetovi, Closeable {
                             .withAdresa(adresa)
                             .build();
 
+                    noviObiteljskiClan.setId(results.getInt("ID"));
                     obiteljskiClanovi.add(noviObiteljskiClan);
                 }
             }
@@ -171,11 +174,10 @@ public class BazePodataka implements DataSetovi, Closeable {
 
     @Override
     public void removePrijatelj(Prijatelj prijatelj) throws DataSetException{
-        String sql = "DELETE FROM osoba WHERE ime = ? AND prezime = ?";
+        String sql = "DELETE FROM osoba WHERE id = ?";
         try{
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, prijatelj.getIme());
-            statement.setString(2, prijatelj.getPrezime());
+            statement.setInt(1, prijatelj.getId());
             statement.execute();
         }catch (SQLException ex){
             System.out.println(ex.getMessage());
@@ -184,11 +186,10 @@ public class BazePodataka implements DataSetovi, Closeable {
     }
     @Override
     public void removeKolega(Kolega kolega) throws DataSetException{
-        String sql = "DELETE FROM kolega WHERE ime = ? AND prezime = ?";
+        String sql = "DELETE FROM kolega WHERE id = ?";
         try{
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, kolega.getIme());
-            statement.setString(2, kolega.getPrezime());
+            statement.setInt(1, kolega.getId());
             statement.execute();
         }catch (SQLException ex){
             System.out.println(ex.getMessage());
@@ -197,11 +198,10 @@ public class BazePodataka implements DataSetovi, Closeable {
     }
     @Override
     public void removeObiteljskiClan(ObiteljClan obiteljClan) throws DataSetException{
-        String sql = "DELETE FROM OBITELJSKI_CLAN WHERE ime = ? AND prezime = ?";
+        String sql = "DELETE FROM OBITELJSKI_CLAN WHERE id = ?";
         try{
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, obiteljClan.getIme());
-            statement.setString(2, obiteljClan.getPrezime());
+            statement.setString(1, obiteljClan.getPrezime());
             statement.execute();
         }catch (SQLException ex){
             System.out.println(ex.getMessage());
@@ -211,7 +211,7 @@ public class BazePodataka implements DataSetovi, Closeable {
 
     @Override
     public void editPrijatelj(Prijatelj startiPrijatelj, Prijatelj noviPrijatelj) throws DataSetException{
-        String sql = "UPDATE OSOBA  SET IME = ?, PREZIME = ?, EMAIL = ?, DATUM_RODJENJA = ? WHERE IME = ? AND PREZIME = ?";
+        String sql = "UPDATE OSOBA  SET IME = ?, PREZIME = ?, EMAIL = ?, DATUM_RODJENJA = ? WHERE ID = ?";
 
         try{
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -219,8 +219,7 @@ public class BazePodataka implements DataSetovi, Closeable {
             statement.setString(2, noviPrijatelj.getPrezime());
             statement.setString(3, noviPrijatelj.getEmail());
             statement.setDate(4, Date.valueOf(noviPrijatelj.getRodendan()));
-            statement.setString(5, startiPrijatelj.getIme());
-            statement.setString(6, startiPrijatelj.getPrezime());
+            statement.setInt(5, startiPrijatelj.getId());
             statement.executeUpdate();
 
         }catch (SQLException ex){
@@ -231,7 +230,7 @@ public class BazePodataka implements DataSetovi, Closeable {
 
     @Override
     public void editKolega(Kolega stariKolega, Kolega noviKolega ) throws DataSetException{
-        String sql = "UPDATE KOLEGA SET IME = ?, PREZIME = ?, BRTELEFONA = ?, DATUM_RODJENJA = ? WHERE IME = ? AND PREZIME = ?";
+        String sql = "UPDATE KOLEGA SET IME = ?, PREZIME = ?, BRTELEFONA = ?, DATUM_RODJENJA = ? WHERE ID = ?";
 
         try{
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -239,8 +238,7 @@ public class BazePodataka implements DataSetovi, Closeable {
             statement.setString(2, noviKolega.getPrezime());
             statement.setString(3, noviKolega.getBrTelefona());
             statement.setDate(4, Date.valueOf(noviKolega.getRodendan()));
-            statement.setString(5, stariKolega.getIme());
-            statement.setString(6, stariKolega.getPrezime());
+            statement.setInt(5, stariKolega.getId());
             statement.executeUpdate();
 
         }catch (SQLException ex){
@@ -250,7 +248,7 @@ public class BazePodataka implements DataSetovi, Closeable {
     }
     @Override
     public void editObiteljClan(ObiteljClan stariClan, ObiteljClan noviClan) throws DataSetException{
-        String sql = "UPDATE OBITELJSKI_CLAN SET IME = ?, PREZIME = ?, ADRESA = ?, DATUM_RODJENJA = ? WHERE IME = ? AND PREZIME = ?";
+        String sql = "UPDATE OBITELJSKI_CLAN SET IME = ?, PREZIME = ?, ADRESA = ?, DATUM_RODJENJA = ? WHERE ID = ?";
 
         try{
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -258,8 +256,7 @@ public class BazePodataka implements DataSetovi, Closeable {
             statement.setString(2, noviClan.getPrezime());
             statement.setString(3, noviClan.getAdresa());
             statement.setDate(4, Date.valueOf(noviClan.getRodendan()));
-            statement.setString(5, stariClan.getIme());
-            statement.setString(6, stariClan.getPrezime());
+            statement.setInt(5, stariClan.getId());
             statement.executeUpdate();
 
         }catch (SQLException ex){

@@ -17,23 +17,23 @@
                   <menus>
                       <Menu mnemonicParsing="false" text="Prijatelji">
                           <items>
-                              <MenuItem mnemonicParsing="false" onAction="#ispisiOsobe" text="Ispis" />
+                              <MenuItem mnemonicParsing="false" onAction="#ispisiOsobe" text="Prikaz" />
                           </items>
                       </Menu>
                       <Menu mnemonicParsing="false" text="Kolege">
                           <items>
-                              <MenuItem mnemonicParsing="false" onAction="#ispisiKolege" text="Ispis" />
+                              <MenuItem mnemonicParsing="false" onAction="#ispisiKolege" text="Prikaz" />
                           </items>
                       </Menu>
                       <Menu mnemonicParsing="false" text="Obitelj">
                           <items>
-                              <MenuItem mnemonicParsing="false" onAction="#ispisObiteljskogClana" text="Ispis" />
+                              <MenuItem mnemonicParsing="false" onAction="#ispisObiteljskogClana" text="Prikaz" />
                           </items>
                       </Menu>
                   <Menu mnemonicParsing="false" text="AdminPanel">
                     <items>
-                        <MenuItem onAction="#showAllUsersScreen" mnemonicParsing="false" text="Users" />
-                      <MenuItem onAction="#showPromjeneScreen" mnemonicParsing="false" text="Promjene" />
+                        <MenuItem mnemonicParsing="false" onAction="#showAllUsersScreen" text="Users" />
+                      <MenuItem mnemonicParsing="false" onAction="#showPromjeneScreen" text="Promjene" />
                     </items>
                   </Menu>
                   </menus>
