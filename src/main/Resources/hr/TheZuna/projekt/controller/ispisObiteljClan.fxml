@@ -35,7 +35,6 @@
                 <TableColumn fx:id="imeObiteljClanColumn" prefWidth="75.0" text="Ime" />
                 <TableColumn fx:id="prezimeObiteljClanColumn" prefWidth="88.0" text="Prezime" />
                 <TableColumn fx:id="datumRodenjaObiteljClanColumn" prefWidth="125.0" text="Datum Rodenja " />
-            <TableColumn fx:id="adresaObiteljClanColumn" prefWidth="126.0" text="Adresa" />
             </columns>
             <BorderPane.margin>
                 <Insets top="23.0" />

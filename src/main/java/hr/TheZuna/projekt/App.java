@@ -2,6 +2,7 @@ package hr.TheZuna.projekt;
 
 import hr.TheZuna.projekt.baza.BazePodataka;
 import hr.TheZuna.projekt.baza.DataSetovi;
+import hr.TheZuna.projekt.controller.IspisPromjenaController;
 import hr.TheZuna.projekt.entitet.*;
 import hr.TheZuna.projekt.iznimke.DataSetException;
 import hr.TheZuna.projekt.iznimke.OsobaMladaOd18;
@@ -44,16 +45,12 @@ public class App extends Application {
     private static User currentUser = null;
 
     private static List<Promjena> promjene = new ArrayList<>();
+    private static List<Promjena> desiariliziranePromjene = new ArrayList<>();
     private static final Object lock = new Object();
     private static Lock slavljeniciLock = new ReentrantLock();
+    private static Lock serializacijaLock = new ReentrantLock();
 
-
-    public static final DateTimeFormatter DATE_FORMAT_SHORT = DateTimeFormatter.ofPattern("d.M.yyyy.");
-    public static final DateTimeFormatter DATE_TIME_FORMAT_SHORT = DateTimeFormatter.ofPattern("d.M.yyyy. H:mm");
-    public static final DateTimeFormatter TIME_FORMAT_SHORT = DateTimeFormatter.ofPattern("H:mm");
     public static final DateTimeFormatter DATE_FORMAT_FULL = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
-    public static final DateTimeFormatter DATE_TIME_FORMAT_FULL = DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm");
-    public static final DateTimeFormatter TIME_FORMAT_FULL = DateTimeFormatter.ofPattern("HH:mm");
     @Override
     public void start(Stage primaryStage) throws IOException {
 
@@ -78,7 +75,7 @@ public class App extends Application {
                 try{
                     slavljeniciLock.lock();
                     slavljenici = getAllSlavljenici();
-                    System.out.println("Spremljeno");
+                    //System.out.println("Spremljeno");
                     slavljeniciLock.unlock();
                     Thread.sleep(1000);
                 }catch (DataSetException ex){
@@ -110,7 +107,7 @@ public class App extends Application {
                        alert.show();
                    });
                    slavljeniciLock.unlock();
-                   Thread.sleep(10000);
+                   Thread.sleep(100000);
                }catch (InterruptedException ex){
                    ex.printStackTrace();
                }
@@ -118,6 +115,35 @@ public class App extends Application {
            }
         });
         readingSlavljeniciThread.start();
+
+        Thread serializirajPromjeneListThread = new Thread(() -> {
+            while (true){
+                try {
+                    serializacijaLock.lock();
+                    String fileName = "promjeneList.ser";
+                    serializePromjenaList(fileName);
+                    serializacijaLock.unlock();
+                    Thread.sleep(5000);
+                }catch (InterruptedException ex){
+                    ex.printStackTrace();
+                }
+            }
+        });
+        serializirajPromjeneListThread.start();
+        Thread deserializirajPromjeneListThread = new Thread(() -> {
+            while (true){
+                try {
+                    serializacijaLock.lock();
+                    String fileName = "promjeneList.ser";
+                    deserializePromjenaList(fileName);
+                    serializacijaLock.unlock();
+                    Thread.sleep(5000);
+                }catch (InterruptedException ex){
+                    ex.printStackTrace();
+                }
+            }
+        });
+        deserializirajPromjeneListThread.start();
 
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -162,18 +188,6 @@ public class App extends Application {
         return currentUser;
     }
 
-    private static void serializeChanges() {
-        try (FileOutputStream fileOut = new FileOutputStream("changes.bin");
-             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
-            objectOut.writeObject(promjene);
-            System.out.println("Changes serialized.");
-            Thread.sleep(1000);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
     public static Object getPromjeneLock() {
         return lock;
     }
@@ -206,5 +220,30 @@ public class App extends Application {
         sveOsobe.addAll(o);
 
         return sveOsobe.stream().filter(osoba -> osoba.getRodendan().getMonth() == currentdate.getMonth() && osoba.getRodendan().getDayOfMonth() == currentdate.getDayOfMonth()).collect(Collectors.toList());
+    }
+    public static void deserializePromjenaList(String fileName) {
+        try (FileInputStream fileIn = new FileInputStream(fileName);
+             ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
+            desiariliziranePromjene = (List<Promjena>) objectIn.readObject();
+            System.out.println("changeList deserialized from " + fileName);
+            System.out.println(desiariliziranePromjene);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void serializePromjenaList(String fileName) {
+        try (FileOutputStream fileOut = new FileOutputStream(fileName, false);
+             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+            objectOut.writeObject(promjene);
+            System.out.println("Promjene Lista serialized i spremljena u" + fileName);
+            System.out.println(promjene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<Promjena> getPromjene(){
+        return desiariliziranePromjene;
     }
 }

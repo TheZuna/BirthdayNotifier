@@ -3,6 +3,8 @@ package hr.TheZuna.projekt.controller;
 import hr.TheZuna.projekt.App;
 import hr.TheZuna.projekt.entitet.Kolega;
 import hr.TheZuna.projekt.entitet.ObiteljClan;
+import hr.TheZuna.projekt.entitet.Osoba;
+import hr.TheZuna.projekt.entitet.Promjena;
 import hr.TheZuna.projekt.iznimke.DataSetException;
 import hr.TheZuna.projekt.util.LogLevel;
 import hr.TheZuna.projekt.util.RadnjaLoga;
@@ -16,6 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class IspisObiteljClanController {
@@ -30,15 +33,12 @@ public class IspisObiteljClanController {
     private TableColumn<ObiteljClan, String> imeObiteljClanColumn;
     @FXML
     private TableColumn<ObiteljClan, String> datumRodenjaObiteljClanColumn;
-    @FXML
-    private TableColumn<ObiteljClan, String> adresaObiteljClanColumn;
 
     @FXML
     public void initialize() {
         imeObiteljClanColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getIme()));
         prezimeObiteljClanColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getPrezime()));
         datumRodenjaObiteljClanColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getRodendan().format(App.DATE_FORMAT_FULL)));
-        adresaObiteljClanColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAdresa()));
 
         try {
             sviObiteljClan = App.getDataSet().readObiteljskiClan();
@@ -65,6 +65,10 @@ public class IspisObiteljClanController {
         try {
             ObiteljClan selectedObiteljskiClan = obiteljClanTableView.getSelectionModel().getSelectedItem();
             App.getDataSet().removeObiteljskiClan(selectedObiteljskiClan);
+
+            App.log(selectedObiteljskiClan, " ", LogLevel.INFO, RadnjaLoga.REMOVE);
+            App.addToPromjene(new Promjena("REMOVE", (Osoba) selectedObiteljskiClan, LocalDate.now(), App.getCurrentUser()));
+
             var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Izbrisana");
             alert.show();
             BorderPane root;
@@ -74,12 +78,10 @@ public class IspisObiteljClanController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            App.log(selectedObiteljskiClan, " ", LogLevel.INFO, RadnjaLoga.REMOVE);
 
         } catch (DataSetException ex) {
             System.out.println(ex.getMessage());
         }
-
     }
 
     @FXML

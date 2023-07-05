@@ -1,6 +1,7 @@
 package hr.TheZuna.projekt.controller;
 
 import hr.TheZuna.projekt.App;
+import hr.TheZuna.projekt.entitet.Osoba;
 import hr.TheZuna.projekt.entitet.Prijatelj;
 import hr.TheZuna.projekt.entitet.Promjena;
 import hr.TheZuna.projekt.iznimke.DataSetException;
@@ -18,6 +19,7 @@ import javafx.scene.layout.BorderPane;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -34,10 +36,13 @@ public class IspisOsobaController {
     @FXML
     private TableColumn<Prijatelj, String> datumRodenjaPrijateljaColumn;
     @FXML
+    private TableColumn<Prijatelj, String> emailPrijateljaColumn;
+    @FXML
     public void initialize (){
         imePrijateljaColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getIme()));
         prezimePrijateljaColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getPrezime()));
         datumRodenjaPrijateljaColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getRodendan().format(App.DATE_FORMAT_FULL)));
+        emailPrijateljaColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmail()));
 
         try {
             sviPrijatelji = App.getDataSet().readPrijatelj();
@@ -61,6 +66,11 @@ public class IspisOsobaController {
         try{
             Prijatelj selectedPrijatelj = prijateljTableView.getSelectionModel().getSelectedItem();
             App.getDataSet().removePrijatelj(selectedPrijatelj);
+
+
+            App.log(selectedPrijatelj, " ", LogLevel.INFO, RadnjaLoga.REMOVE);
+            App.addToPromjene(new Promjena("REMOVE", (Osoba) selectedPrijatelj, LocalDate.now(), App.getCurrentUser()));
+
             var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Izbrisana");
             alert.show();
 
@@ -94,7 +104,6 @@ public class IspisOsobaController {
             System.out.println("Tu sam puko Edit prijatelja");
         }
     }
-    //public static Prijatelj odabraniPrijatelj = prijateljTableView.getSelectionModel().getSelectedItem();
     public Prijatelj getOdabraniPrijatelj(){
         Prijatelj odabraniPrijatelj = prijateljTableView.getSelectionModel().getSelectedItem();
         return odabraniPrijatelj;

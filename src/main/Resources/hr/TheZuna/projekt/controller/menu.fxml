@@ -33,7 +33,7 @@
                   <Menu mnemonicParsing="false" text="AdminPanel">
                     <items>
                         <MenuItem onAction="#showAllUsersScreen" mnemonicParsing="false" text="Users" />
-                      <MenuItem mnemonicParsing="false" text="Promjene" />
+                      <MenuItem onAction="#showPromjeneScreen" mnemonicParsing="false" text="Promjene" />
                     </items>
                   </Menu>
                   </menus>

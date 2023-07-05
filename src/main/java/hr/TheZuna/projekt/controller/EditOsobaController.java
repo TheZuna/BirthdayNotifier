@@ -1,7 +1,9 @@
 package hr.TheZuna.projekt.controller;
 
 import hr.TheZuna.projekt.App;
+import hr.TheZuna.projekt.entitet.Osoba;
 import hr.TheZuna.projekt.entitet.Prijatelj;
+import hr.TheZuna.projekt.entitet.Promjena;
 import hr.TheZuna.projekt.iznimke.DataSetException;
 import hr.TheZuna.projekt.util.LogLevel;
 import hr.TheZuna.projekt.util.RadnjaLoga;
@@ -16,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class EditOsobaController {
@@ -40,6 +43,10 @@ public class EditOsobaController {
         System.out.println(prijateljZaEditat);
         System.out.println(prijateljZaEditat.getIme());
         imePrijatelja.setText(prijateljZaEditat.getIme());
+        prezimePrijatelja.setText(prijateljZaEditat.getPrezime());
+        emailPrijatelja.setText(prijateljZaEditat.getEmail());
+        datumRodenjaPrijatelja.setValue(prijateljZaEditat.getRodendan());
+
         editButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -66,12 +73,17 @@ public class EditOsobaController {
         if (messages.size() == 0){
             System.out.println("NEMA ERRORA");
             try {
-                App.getDataSet().editPrijatelj(prijateljZaEditat, new Prijatelj(
+                Prijatelj prijatelj = new  Prijatelj(
                         imePrijatelja.getText(),
                         prezimePrijatelja.getText(),
                         emailPrijatelja.getText(),
-                        datumRodenjaPrijatelja.getValue()
-                ));
+                        datumRodenjaPrijatelja.getValue());
+
+                App.getDataSet().editPrijatelj(prijateljZaEditat, prijatelj);
+
+                App.log(prijateljZaEditat, " ", LogLevel.INFO, RadnjaLoga.EDIT);
+                App.addToPromjene(new Promjena("EDIT", (Osoba) prijateljZaEditat, LocalDate.now(), App.getCurrentUser()));
+
                 var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Editana");
                 alert.show();
                 App.log(prijateljZaEditat, " ", LogLevel.INFO, RadnjaLoga.EDIT);

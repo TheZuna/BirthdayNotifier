@@ -1,10 +1,11 @@
 package hr.TheZuna.projekt.entitet;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Kolega extends Osoba{
+public class Kolega extends Osoba implements Serializable {
     private String brTelefona;
     private LocalDate rodendan;
 

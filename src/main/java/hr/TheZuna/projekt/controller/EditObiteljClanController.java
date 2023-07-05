@@ -2,7 +2,9 @@ package hr.TheZuna.projekt.controller;
 
 import hr.TheZuna.projekt.App;
 import hr.TheZuna.projekt.entitet.ObiteljClan;
+import hr.TheZuna.projekt.entitet.Osoba;
 import hr.TheZuna.projekt.entitet.Prijatelj;
+import hr.TheZuna.projekt.entitet.Promjena;
 import hr.TheZuna.projekt.iznimke.DataSetException;
 import hr.TheZuna.projekt.util.LogLevel;
 import hr.TheZuna.projekt.util.RadnjaLoga;
@@ -17,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class EditObiteljClanController {
@@ -41,6 +44,9 @@ public class EditObiteljClanController {
         System.out.println(clanZaEditat);
         System.out.println(clanZaEditat.getIme());
         imeObiteljClan.setText(clanZaEditat.getIme());
+        prezimeObiteljClan.setText(clanZaEditat.getPrezime());
+        adresaObiteljClan.setText(clanZaEditat.getAdresa());
+        datumRodenjaPrijatelja.setValue(clanZaEditat.getRodendan());
         editButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -67,12 +73,16 @@ public class EditObiteljClanController {
         if (messages.size() == 0){
             System.out.println("NEMA ERRORA");
             try {
-                App.getDataSet().editObiteljClan(clanZaEditat, new ObiteljClan(
+                ObiteljClan clan = new ObiteljClan(
                         imeObiteljClan.getText(),
                         prezimeObiteljClan.getText(),
                         adresaObiteljClan.getText(),
-                        datumRodenjaPrijatelja.getValue()
-                ));
+                        datumRodenjaPrijatelja.getValue());
+                App.getDataSet().editObiteljClan(clanZaEditat,clan);
+
+                App.log(clan, " ", LogLevel.INFO, RadnjaLoga.EDIT);
+                App.addToPromjene(new Promjena("EDIT", (Osoba) clan, LocalDate.now(), App.getCurrentUser()));
+
                 var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Editana");
                 App.log(clanZaEditat, " ", LogLevel.INFO, RadnjaLoga.EDIT);
                 alert.show();

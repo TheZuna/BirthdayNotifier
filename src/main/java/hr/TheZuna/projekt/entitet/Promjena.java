@@ -1,5 +1,7 @@
 package hr.TheZuna.projekt.entitet;
 
+import hr.TheZuna.projekt.users.User;
+
 import java.io.Serializable;
 import java.lang.reflect.MalformedParameterizedTypeException;
 import java.time.LocalDate;
@@ -13,12 +15,16 @@ public class Promjena implements Serializable {
     String tipPromijene;
     Osoba osoba;
     LocalDate vrijemePromjene;
+    User user;
+
+    //private static final long serialVersionUID = -5928444989612175375L;
 
 
-    public Promjena(String tipPromijene, Osoba osoba, LocalDate vrijemePromjene){
+    public Promjena(String tipPromijene, Osoba osoba, LocalDate vrijemePromjene, User user){
         this.tipPromijene = tipPromijene;
         this.osoba = osoba;
         this.vrijemePromjene = vrijemePromjene;
+        this.user = user;
     }
     public String getPromjena(){
         return (vrijemePromjene + " " + tipPromijene + " " + osoba.getIme() + " " + osoba.getPrezime());
@@ -26,5 +32,15 @@ public class Promjena implements Serializable {
 
     public String getTipPromijene() {
         return tipPromijene;
+    }
+
+    @Override
+    public String toString() {
+        return "Promjena{" +
+                "tipPromijene='" + tipPromijene + '\'' +
+                ", osoba=" + osoba +
+                ", vrijemePromjene=" + vrijemePromjene +
+                ", user=" + user +
+                '}';
     }
 }

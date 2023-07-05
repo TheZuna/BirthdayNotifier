@@ -93,8 +93,6 @@ public class PrikazRodendanaController {
             o.addAll(prijatelji);
             o.addAll(obitelj);
 
-
-
             osobeKojimaJeRodendan = o.stream().filter(osoba -> osoba.getRodendan().getMonth() == currentdate.getMonth() && osoba.getRodendan().getDayOfMonth() == currentdate.getDayOfMonth()).collect(Collectors.toList());
 
             return osobeKojimaJeRodendan;
@@ -128,12 +126,4 @@ public class PrikazRodendanaController {
             throw new RuntimeException();
         }
     }
-
-
-
-
-
-
-
-
 }

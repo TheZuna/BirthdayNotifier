@@ -102,5 +102,14 @@ public class MenuController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }@FXML
+    public void showPromjeneScreen(){
+        BorderPane root;
+        try {
+            root =  (BorderPane)FXMLLoader.load(getClass().getResource("ispisPromjena.fxml"));
+            App.setMainPage(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

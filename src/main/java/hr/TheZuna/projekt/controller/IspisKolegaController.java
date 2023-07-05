@@ -2,7 +2,9 @@ package hr.TheZuna.projekt.controller;
 
 import hr.TheZuna.projekt.App;
 import hr.TheZuna.projekt.entitet.Kolega;
+import hr.TheZuna.projekt.entitet.Osoba;
 import hr.TheZuna.projekt.entitet.Prijatelj;
+import hr.TheZuna.projekt.entitet.Promjena;
 import hr.TheZuna.projekt.iznimke.DataSetException;
 import hr.TheZuna.projekt.util.LogLevel;
 import hr.TheZuna.projekt.util.RadnjaLoga;
@@ -20,6 +22,7 @@ import javafx.scene.layout.BorderPane;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 
 public class IspisKolegaController {
@@ -68,6 +71,10 @@ public class IspisKolegaController {
         try {
             Kolega selectedKolega = kolegeTableView.getSelectionModel().getSelectedItem();
             App.getDataSet().removeKolega(selectedKolega);
+
+            App.log(selectedKolega, " ", LogLevel.INFO, RadnjaLoga.REMOVE);
+            App.addToPromjene(new Promjena("REMOVE", (Osoba) selectedKolega, LocalDate.now(), App.getCurrentUser()));
+
             var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Izbrisana");
             alert.show();
             BorderPane root;
@@ -107,5 +114,4 @@ public class IspisKolegaController {
         Kolega odabraniKolega = kolegeTableView.getSelectionModel().getSelectedItem();
         return odabraniKolega;
     }
-
 }

@@ -55,12 +55,20 @@ public class UnosOsobeContoller implements EmailValidator {
                         emailPrijatelja.getText(),
                         datumRodenjaPrijatelja.getValue()
                 );
+                /*
                 if(EmailValidator.isValidEmail(emailPrijatelja.getText())){
                     throw new NotAnEmailExeption("Korisnik je unio krivi email");
                 }
+
+                 */
                 App.getDataSet().createPrijatelj(prijatelj);
                 var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Unešena");
                 alert.show();
+
+                App.log(prijatelj, " ", LogLevel.INFO, RadnjaLoga.UNOS);
+                App.addToPromjene(new Promjena("UNOS", (Osoba) prijatelj, LocalDate.now(), App.getCurrentUser()));
+                //System.out.println(App.getAllPromjene());
+
                 BorderPane root;
                 try {
                     root =  (BorderPane) FXMLLoader.load(getClass().getResource("ispisOsoba.fxml"));
@@ -68,18 +76,8 @@ public class UnosOsobeContoller implements EmailValidator {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                App.log(prijatelj, " ", LogLevel.INFO, RadnjaLoga.UNOS);
-
-                App.addToPromjene(new Promjena("UNOS", (Osoba) prijatelj, LocalDate.now()));
-                System.out.println(App.getAllPromjene());
             }catch (DataSetException ex ){
                 ex.getMessage();
-            }catch (NotAnEmailExeption ex){
-                App.log(new Prijatelj(
-                        imePrijatelja.getText(),
-                        prezimePrijatelja.getText(),
-                        emailPrijatelja.getText(),
-                        datumRodenjaPrijatelja.getValue()), " ", LogLevel.INFO, RadnjaLoga.UNOS);
             }
         }else {
             System.out.println("ERROR");

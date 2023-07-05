@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.TheZuna.projekt.controller.IspisPromjenaController">
+    <fx:include source="menu.fxml" />
+   <top>
+      <TableView fx:id="promjenaTableView" prefHeight="383.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="promjenaColumn" prefWidth="398.0" text="Promjene" />
+        </columns>
+         <BorderPane.margin>
+            <Insets top="24.0" />
+         </BorderPane.margin>
+      </TableView>
+   </top>
+   <bottom>
+   </bottom>
+</BorderPane>

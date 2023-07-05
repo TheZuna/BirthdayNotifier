@@ -1,8 +1,9 @@
 package hr.TheZuna.projekt.entitet;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Osoba {
+public class Osoba implements Serializable {
 
     private String ime, prezime;
     private LocalDate rodendan;

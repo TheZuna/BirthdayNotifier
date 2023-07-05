@@ -3,6 +3,8 @@ package hr.TheZuna.projekt.controller;
 import hr.TheZuna.projekt.App;
 import hr.TheZuna.projekt.entitet.Kolega;
 import hr.TheZuna.projekt.entitet.ObiteljClan;
+import hr.TheZuna.projekt.entitet.Osoba;
+import hr.TheZuna.projekt.entitet.Promjena;
 import hr.TheZuna.projekt.iznimke.DataSetException;
 import hr.TheZuna.projekt.util.LogLevel;
 import hr.TheZuna.projekt.util.RadnjaLoga;
@@ -14,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class UnosObiteljskiClanController {
@@ -44,20 +47,17 @@ public class UnosObiteljskiClanController {
         if (messages.size() == 0){
             System.out.println("NEMA ERRORA");
             try {
-                App.getDataSet().createObiteljskiClan(
-                        new ObiteljClan.Builder()
-                                .withIme(imeObiteljClanColumn.getText())
-                                .withPrezime(prezimeObiteljClanColumn.getText())
-                                .withAdresa(adresaObiteljClanColumn.getText())
-                                .withRodendan(datumRodenjaObiteljClanColumn.getValue())
-                                .build()
-                );
-                App.log(new ObiteljClan.Builder()
+                ObiteljClan clan = new ObiteljClan.Builder()
                         .withIme(imeObiteljClanColumn.getText())
                         .withPrezime(prezimeObiteljClanColumn.getText())
                         .withAdresa(adresaObiteljClanColumn.getText())
                         .withRodendan(datumRodenjaObiteljClanColumn.getValue())
-                        .build(), " ", LogLevel.INFO, RadnjaLoga.UNOS);
+                        .build();
+
+                App.getDataSet().createObiteljskiClan(clan);
+                App.log(clan, " ", LogLevel.INFO, RadnjaLoga.UNOS);
+                App.addToPromjene(new Promjena("UNOS", (Osoba) clan, LocalDate.now(), App.getCurrentUser()));
+
                 var alert = new Alert(Alert.AlertType.INFORMATION, "Osoba je Unešena");
                 alert.show();
                 BorderPane root;

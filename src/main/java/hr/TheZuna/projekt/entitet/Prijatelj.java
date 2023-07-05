@@ -1,8 +1,9 @@
 package hr.TheZuna.projekt.entitet;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Prijatelj extends Osoba{
+public class Prijatelj extends Osoba implements Serializable {
     private String ime, prezime, email;
     private LocalDate rodendan;
 
