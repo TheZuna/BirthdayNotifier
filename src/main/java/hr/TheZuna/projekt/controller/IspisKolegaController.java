@@ -104,20 +104,28 @@ public class IspisKolegaController {
 
     @FXML
     public void prikazEditaKolege() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("editKolega.fxml"));
+        Kolega selectedKolega = kolegeTableView.getSelectionModel().getSelectedItem();
+        if(selectedKolega != null){
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("editKolega.fxml"));
 
 
-            EditKolegaController controller = new EditKolegaController(kolegeTableView.getSelectionModel().getSelectedItem());
-            loader.setController(controller);
+                EditKolegaController controller = new EditKolegaController(kolegeTableView.getSelectionModel().getSelectedItem());
+                loader.setController(controller);
 
-            BorderPane root = loader.load();
-            App.setMainPage(root);
+                BorderPane root = loader.load();
+                App.setMainPage(root);
 
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            var alert = new Alert(Alert.AlertType.WARNING, "Niste odabrali kolegu za uređivanje.");
+            alert.setTitle("Upozorenje");
+            alert.show();
         }
+
     }
 
     //public static Prijatelj odabraniPrijatelj = prijateljTableView.getSelectionModel().getSelectedItem();

@@ -102,18 +102,25 @@ public class IspisOsobaController {
     }
     @FXML
     public void prikazEditaPrijatelja(){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("editOsoba.fxml"));
+        Prijatelj selectedPrijatelj = prijateljTableView.getSelectionModel().getSelectedItem();
+        if(selectedPrijatelj != null){
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("editOsoba.fxml"));
 
 
-            EditOsobaController controller = new EditOsobaController(prijateljTableView.getSelectionModel().getSelectedItem());
-            loader.setController(controller);
+                EditOsobaController controller = new EditOsobaController(prijateljTableView.getSelectionModel().getSelectedItem());
+                loader.setController(controller);
 
-            BorderPane root = loader.load();
-            App.setMainPage(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Tu sam puko Edit prijatelja");
+                BorderPane root = loader.load();
+                App.setMainPage(root);
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("Tu sam puko Edit prijatelja");
+            }
+        }else {
+            var alert = new Alert(Alert.AlertType.WARNING, "Niste odabrali prijatelja za uređivanja.");
+            alert.setTitle("Upozorenje");
+            alert.show();
         }
     }
     public Prijatelj getOdabraniPrijatelj(){

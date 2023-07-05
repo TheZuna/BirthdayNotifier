@@ -98,18 +98,26 @@ public class IspisObiteljClanController {
 
     @FXML
     public void prikazEditaObiteljskogClana() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("editObiteljClan.fxml"));
+        ObiteljClan selectedObiteljskiClan = obiteljClanTableView.getSelectionModel().getSelectedItem();
+        if(selectedObiteljskiClan != null){
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("editObiteljClan.fxml"));
 
 
-            EditObiteljClanController controller = new EditObiteljClanController(obiteljClanTableView.getSelectionModel().getSelectedItem());
-            loader.setController(controller);
+                EditObiteljClanController controller = new EditObiteljClanController(obiteljClanTableView.getSelectionModel().getSelectedItem());
+                loader.setController(controller);
 
-            BorderPane root = loader.load();
-            App.setMainPage(root);
+                BorderPane root = loader.load();
+                App.setMainPage(root);
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            var alert = new Alert(Alert.AlertType.WARNING, "Niste odabrali obiteljskog člana za uređivanje.");
+            alert.setTitle("Upozorenje");
+            alert.show();
         }
+
     }
 }
