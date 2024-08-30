@@ -1,2 +1,4 @@
 # BirthdayNotifier
-Java projekt 
+Java project.
+
+Notifying app for birthdays
